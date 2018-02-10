@@ -1,5 +1,7 @@
 # PowerShell-IoT
 
+[![Build status](https://ci.appveyor.com/api/projects/status/ipvxu77rxb5ou8gb?svg=true)](https://ci.appveyor.com/project/PowerShell/powershell-iot)
+
 Docs will change...
 
 ## Getting Started
