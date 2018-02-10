@@ -1,0 +1,19 @@
+build: off
+
+# Ignore testing a commit if only the README.md file changed
+# Or if various strings are found in the commit message: updated readme, update readme, update docs, update version, update appveyor
+skip_commits:
+  files:
+    - README.md
+  message: /updated readme.*|update readme.*s|update docs.*|update version.*|update appveyor.*/
+
+branches:
+  only:
+    - master
+
+test_script:
+- pwsh: Install-Module InvokeBuild -Force -Scope CurrentUser; Invoke-Build
+
+artifacts:
+  - path: out\PSIoT
+    name: PSIoT
