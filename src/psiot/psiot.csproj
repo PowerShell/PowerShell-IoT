@@ -9,4 +9,8 @@
     <PackageReference Include="Unosquare.Raspberry.IO" Version="0.13.0" />
   </ItemGroup>
 
+  <ItemGroup Condition="'$(Configuration)' == 'Debug'">
+    <None Update="PSIoT.psd1" CopyToOutputDirectory="PreserveNewest" />
+  </ItemGroup>
+
 </Project>
