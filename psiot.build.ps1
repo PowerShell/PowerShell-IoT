@@ -36,5 +36,21 @@ task Test {
     Pop-Location
 }
 
+task Package Build, {
+    if ((Test-Path "$PSScriptRoot\out")) {
+        Remove-Item -Path $PSScriptRoot\out -Recurse
+    }
+    New-Item -ItemType directory -Path $PSScriptRoot\out
+    New-Item -ItemType directory -Path $PSScriptRoot\out\PSIoT
+
+    Copy-Item -Path "$PSScriptRoot\src\psiot\PSIoT.psd1" -Destination "$PSScriptRoot\out\PSIoT\" -Force
+    Copy-Item -Path "$PSScriptRoot\src\psiot\bin\Debug\netcoreapp2.0\psiot.dll" -Destination "$PSScriptRoot\out\PSIoT\" -Force
+
+    if ($env:APPVEYOR) {
+        Compress-Archive .\out\* .\PSIoT.zip
+        (New-Object System.Net.WebClient).UploadFile("https://ci.appveyor.com/api/testresults/nunit/$($env:APPVEYOR_JOB_ID)", (Resolve-Path .\PSIoT.zip));
+    }
+}
+
 # The default task is to run the entire CI build
 task . Clean, Build, Test
