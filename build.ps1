@@ -16,7 +16,6 @@ param(
 $NeededTools = @{
     PowerShellCore = "PowerShell Core 6.0.0 or greater"
     DotNetSdk = "dotnet sdk 2.0 or greater"
-    PowerShellGet = "PowerShellGet latest"
     InvokeBuild = "InvokeBuild latest"
 }
 
@@ -38,13 +37,6 @@ function needsDotNetSdk () {
     return $false
 }
 
-function needsPowerShellGet () {
-    if (Get-Module -ListAvailable -Name PowerShellGet) {
-        return $false
-    }
-    return $true
-}
-
 function needsInvokeBuild () {
     if (Get-Module -ListAvailable -Name InvokeBuild) {
         return $false
@@ -60,9 +52,6 @@ function getMissingTools () {
     }
     if (needsDotNetSdk) {
         $missingTools += $NeededTools.DotNetSdk
-    }
-    if (needsPowerShellGet) {
-        $missingTools += $NeededTools.PowerShellGet
     }
     if (needsInvokeBuild) {
         $missingTools += $NeededTools.InvokeBuild
