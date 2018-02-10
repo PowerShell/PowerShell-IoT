@@ -15,6 +15,5 @@ test_script:
 - pwsh: Install-Module InvokeBuild -Force -Scope CurrentUser; Invoke-Build
 
 artifacts:
-  - path: out\PSIoT
+  - path: out\PSIoT\
     name: PSIoT
-    type: zip
