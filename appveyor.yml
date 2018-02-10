@@ -1,0 +1,4 @@
+build: off
+
+test_script:
+- pwsh: Install-Module InvokeBuild -Force -Scope CurrentUser; Invoke-Build

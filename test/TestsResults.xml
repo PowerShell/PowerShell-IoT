@@ -1,0 +1,22 @@
+﻿<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<test-results xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="nunit_schema_2.5.xsd" name="Pester" total="1" errors="0" failures="0" not-run="0" inconclusive="0" ignored="0" skipped="0" invalid="0" date="2018-02-09" time="16:17:07">
+  <environment platform="Unknown" user="" clr-version="Unknown" nunit-version="2.5.8.0" os-version="0.0.0.0" cwd="/Users/tylerleonhardt/Desktop/Tech/PowerShell/PowerShell-IoT/test" machine-name="" user-domain="" />
+  <culture-info current-culture="en-US" current-uiculture="en-US" />
+  <test-suite type="TestFixture" name="Pester" executed="True" result="Success" success="True" time="0.1325" asserts="0" description="Pester">
+    <results>
+      <test-suite type="TestFixture" name="/Users/tylerleonhardt/Desktop/Tech/PowerShell/PowerShell-IoT/test/psiot.Tests.ps1" executed="True" result="Success" success="True" time="0.1325" asserts="0" description="/Users/tylerleonhardt/Desktop/Tech/PowerShell/PowerShell-IoT/test/psiot.Tests.ps1">
+        <results>
+          <test-suite type="TestFixture" name="Empty Test" executed="True" result="Success" success="True" time="0.1325" asserts="0" description="Empty Test">
+            <results>
+              <test-suite type="TestFixture" name="Empty Test" executed="True" result="Success" success="True" time="0.1325" asserts="0" description="Empty Test">
+                <results>
+                  <test-case description="Empty Test" name="Empty Test.Empty Test.Empty Test" time="0.1325" asserts="0" success="True" result="Success" executed="True" />
+                </results>
+              </test-suite>
+            </results>
+          </test-suite>
+        </results>
+      </test-suite>
+    </results>
+  </test-suite>
+</test-results>
