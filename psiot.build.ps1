@@ -53,4 +53,4 @@ task Package Build, {
 }
 
 # The default task is to run the entire CI build
-task . Clean, Build, Test
+task . Clean, Build, Test, Package
