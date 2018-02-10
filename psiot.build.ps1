@@ -45,6 +45,11 @@ task Package Build, {
 
     Copy-Item -Path "$PSScriptRoot\src\psiot\PSIoT.psd1" -Destination "$PSScriptRoot\out\PSIoT\" -Force
     Copy-Item -Path "$PSScriptRoot\src\psiot\bin\Debug\netcoreapp2.0\psiot.dll" -Destination "$PSScriptRoot\out\PSIoT\" -Force
+
+    if ($env:APPVEYOR) {
+        Compress-Archive $PSScriptRoot\out\* $PSScriptRoot\PSIoT.zip
+        Push-AppveyorArtifact $PSScriptRoot\PSIoT.zip
+    }
 }
 
 # The default task is to run the entire CI build
