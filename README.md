@@ -1,6 +1,7 @@
 # PowerShell-IoT
 
 [![Build status](https://ci.appveyor.com/api/projects/status/ipvxu77rxb5ou8gb?svg=true)](https://ci.appveyor.com/project/PowerShell/powershell-iot)
+[![Travis](https://img.shields.io/travis/rust-lang/rust.svg?logo=travis)](https://travis-ci.com/PowerShell/PowerShell-IoT)
 
 Docs will change...
 
