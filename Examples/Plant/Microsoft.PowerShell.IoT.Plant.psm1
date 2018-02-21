@@ -1,26 +1,26 @@
-﻿function SoilIsDry
+﻿function Read-SoilIsDry
 {
     Get-GpioPin -Pin 5
 }
 
-function Set-Lights
+function Set-Light
 {
     param
     (
-        [Parameter(Mandatory=$true, ValueFromPipeline=$true)]
-        [bool] $Value
+        [Parameter(Mandatory=$true, Position=0, ValueFromPipeline=$true)]
+        [ValidateSet('On','Off',ignorecase=$true)]
+        [string] $State
     )
-    
-    Set-GpioPin -Pin 2 -Value $Value
+    [bool]$value = $State -eq 'On'
+    Set-GpioPin -Pin 2 -Value $value
 }
 
-function Set-Water
+function Start-Water
 {
-    param
-    (
-        [Parameter(Mandatory=$true, ValueFromPipeline=$true)]
-        [bool] $Value
-    )
-    
-    Set-GpioPin -Pin 0 -Value (-not $Value)
+    Set-GpioPin -Pin 0 -Value $false
+}
+
+function Stop-Water
+{
+    Set-GpioPin -Pin 0 -Value $true
 }
