@@ -1,6 +1,14 @@
 ﻿function Read-SoilIsDry
 {
-    Get-GpioPin -Id 5 -Raw
+    $raw = Get-GpioPin -Id 5 -Raw
+    if($raw -eq "High")
+    {
+        return $true
+    }
+    else
+    {
+        return $false
+    }
 }
 
 function Set-Light
