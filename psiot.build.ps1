@@ -38,13 +38,18 @@ task Test {
 
 task Package Build, {
     if ((Test-Path "$PSScriptRoot\out")) {
-        Remove-Item -Path $PSScriptRoot\out -Recurse
+        Remove-Item -Path $PSScriptRoot\out -Recurse -Force
     }
+
+    Push-Location "$PSScriptRoot\src\psiot"
+    dotnet publish
+    Pop-Location
+
     New-Item -ItemType directory -Path $PSScriptRoot\out
     New-Item -ItemType directory -Path $PSScriptRoot\out\PSIoT
 
     Copy-Item -Path "$PSScriptRoot\src\psiot\PSIoT.psd1" -Destination "$PSScriptRoot\out\PSIoT\" -Force
-    Copy-Item -Path "$PSScriptRoot\src\psiot\bin\Debug\netcoreapp2.0\psiot.dll" -Destination "$PSScriptRoot\out\PSIoT\" -Force
+    Copy-Item -Path "$PSScriptRoot\src\psiot\bin\Debug\netcoreapp2.0\publish\*" -Destination "$PSScriptRoot\out\PSIoT\" -Force -Recurse
 }
 
 # The default task is to run the entire CI build
