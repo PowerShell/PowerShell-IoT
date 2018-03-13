@@ -1,4 +1,7 @@
-﻿function Read-SoilIsDry
+﻿# Copyright (c) Microsoft Corporation. All rights reserved.
+# Licensed under the MIT License.
+
+function Read-SoilIsDry
 {
     $raw = Get-GpioPin -Id 5 -Raw
     if($raw -eq "High")

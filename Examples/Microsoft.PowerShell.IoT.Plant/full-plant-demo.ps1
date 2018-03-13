@@ -1,3 +1,6 @@
+# Copyright (c) Microsoft Corporation. All rights reserved.
+# Licensed under the MIT License.
+
 # A demo that uses Jobs to toggle lights and turn on the pump
 
 Import-Module Microsoft.PowerShell.IoT.Plant

@@ -1,4 +1,7 @@
-﻿@{
+﻿# Copyright (c) Microsoft Corporation. All rights reserved.
+# Licensed under the MIT License.
+
+@{
     GUID="eb74e8da-9ae2-482a-a648-e96550fb8739"
     Author="Microsoft Corporation"
     CompanyName="Microsoft Corporation"
