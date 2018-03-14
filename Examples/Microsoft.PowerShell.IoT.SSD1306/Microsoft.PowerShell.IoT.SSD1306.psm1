@@ -1,4 +1,7 @@
-﻿# Example usage:
+﻿# Copyright (c) Microsoft Corporation. All rights reserved.
+# Licensed under the MIT License.
+
+# Example usage:
 # New-OledDisplay | Set-OledText -Value "Hello from PowerShell"
 
 # SSD1306 datasheet can be found here:

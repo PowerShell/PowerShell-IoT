@@ -1,3 +1,6 @@
+# Copyright (c) Microsoft Corporation. All rights reserved.
+# Licensed under the MIT License.
+
 function NeedsRestore($rootPath) {
     # This checks to see if the number of folders under a given
     # path (like "src" or "test") is greater than the number of
