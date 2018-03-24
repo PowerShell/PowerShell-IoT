@@ -45,9 +45,15 @@ a pin based GPIO access library written in C.
 
 ## Installation
 
-### PowerShell Gallery
+### PowerShell Gallery & GitHub releases
 
-_Installation from the PowerShell Gallery coming soon._
+_Installation from the PowerShell Gallery and download from GitHub releases coming soon._
+
+### AppVeyor
+
+You can download the latest CI build from our [AppVeyor build here](https://ci.appveyor.com/project/PowerShell/powershell-iot).
+Go to the latest build, click on either of the images, then click on the artifacts tab.
+From there, you can download a zip of the latest CI build.
 
 ### From Source
 
