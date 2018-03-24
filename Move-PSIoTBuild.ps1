@@ -20,8 +20,8 @@ begin {
 }
 
 process {
-    Write-Host "Connecting to $_"
-    $sessions += New-PSSession -HostName $_ -UserName pi
+    Write-Host "Connecting to $Ip"
+    $sessions += New-PSSession -HostName $Ip -UserName pi
 }
 
 end {
@@ -33,7 +33,7 @@ end {
         $session = $_
 
         # Should compress and decompress
-        Copy-Item "$PSScriptRoot\out\PSIoT" "/usr/local/share/powershell/Modules/PSIoT" -Recurse -Force -ToSession $session
+        Copy-Item "$PSScriptRoot\out\Microsoft.PowerShell.IoT" "/usr/local/share/powershell/Modules/Microsoft.PowerShell.IoT" -Recurse -Force -ToSession $session
 
         if ($WithExample) {
             $WithExample | ForEach-Object {
