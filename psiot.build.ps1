@@ -44,15 +44,15 @@ task Package Build, {
         Remove-Item -Path $PSScriptRoot\out -Recurse -Force
     }
 
-    Push-Location "$PSScriptRoot\src\psiot"
+    Push-Location "$PSScriptRoot\src\Microsoft.PowerShell.IoT"
     dotnet publish
     Pop-Location
 
     New-Item -ItemType directory -Path $PSScriptRoot\out
-    New-Item -ItemType directory -Path $PSScriptRoot\out\PSIoT
+    New-Item -ItemType directory -Path $PSScriptRoot\out\Microsoft.PowerShell.IoT
 
-    Copy-Item -Path "$PSScriptRoot\src\psiot\PSIoT.psd1" -Destination "$PSScriptRoot\out\PSIoT\" -Force
-    Copy-Item -Path "$PSScriptRoot\src\psiot\bin\Debug\netcoreapp2.0\publish\*" -Destination "$PSScriptRoot\out\PSIoT\" -Force -Recurse
+    Copy-Item -Path "$PSScriptRoot\src\Microsoft.PowerShell.IoT\Microsoft.PowerShell.IoT.psd1" -Destination "$PSScriptRoot\out\Microsoft.PowerShell.IoT\" -Force
+    Copy-Item -Path "$PSScriptRoot\src\Microsoft.PowerShell.IoT\bin\Debug\netcoreapp2.0\publish\*" -Destination "$PSScriptRoot\out\Microsoft.PowerShell.IoT\" -Force -Recurse
 }
 
 # The default task is to run the entire CI build

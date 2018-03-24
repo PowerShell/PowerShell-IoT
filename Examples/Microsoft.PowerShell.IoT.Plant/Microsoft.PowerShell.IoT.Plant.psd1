@@ -13,6 +13,6 @@
     DotNetFrameworkVersion = 4.5
     CmdletsToExport = '*'
     AliasesToExport = @()
-    NestedModules=@('PSIoT','Microsoft.PowerShell.IoT.Plant.psm1')
+    NestedModules=@('Microsoft.PowerShell.IoT','Microsoft.PowerShell.IoT.Plant.psm1')
     HelpInfoURI = 'https://go.microsoft.com/fwlink/?LinkId=393254'
 }

@@ -85,7 +85,7 @@ if ($Bootstrap) {
         Invoke-Build Clean
     }
 
-    Invoke-Build Build
+    Invoke-Build Package
 
     if($Test) {
         Invoke-Build Test

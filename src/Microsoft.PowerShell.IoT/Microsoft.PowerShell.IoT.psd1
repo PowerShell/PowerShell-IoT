@@ -13,6 +13,6 @@
     DotNetFrameworkVersion = 4.5
     CmdletsToExport = '*'
     AliasesToExport = @()
-    NestedModules=@('psiot.dll')
+    NestedModules=@('Microsoft.PowerShell.IoT.dll')
     HelpInfoURI = 'https://go.microsoft.com/fwlink/?LinkId=393254'
 }
