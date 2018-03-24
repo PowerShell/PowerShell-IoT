@@ -1,3 +1,7 @@
+image:
+- Visual Studio 2015
+- Ubuntu
+
 build: off
 
 # Ignore testing a commit if only the README.md file changed
@@ -15,5 +19,5 @@ test_script:
 - pwsh: Install-Module InvokeBuild -Force -Scope CurrentUser; Invoke-Build
 
 artifacts:
-  - path: out\PSIoT
-    name: PSIoT
+  - path: out\Microsoft.PowerShell.IoT
+    name: Microsoft.PowerShell.IoT
