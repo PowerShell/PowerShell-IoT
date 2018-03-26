@@ -84,6 +84,22 @@ namespace Microsoft.PowerShell.IoT
             this.PinInfo = pinInfo;
         }
     }
+    
+    public class SPIData
+    {
+        public uint Channel { get; set; }
+        public uint Frequency { get; set; }
+        public byte[] Data { get; set; }
+        public byte[] Responce { get; set; }
+        
+        public SPIData(uint channel, uint frequency, byte[] data, byte[] responce)
+        {
+            this.Channel = channel;
+            this.Frequency = frequency;
+            this.Data = data;
+            this.Responce = responce;
+        }
+    }
 
     [Cmdlet(VerbsCommon.Get, "I2CDevice")]
     public class GetI2CDevice : Cmdlet
@@ -273,6 +289,53 @@ namespace Microsoft.PowerShell.IoT
                     GpioPinData pinData = new GpioPinData(pinId, pinBoolValue ? SignalLevel.High : SignalLevel.Low, pin);
                     WriteObject(pinData);
                 }
+            }
+        }
+    }
+
+    [Cmdlet(VerbsCommunications.Send, "SPIData")]
+    public class SendSPIData : Cmdlet
+    {
+        [Parameter(Mandatory = true, ValueFromPipeline = true, ValueFromPipelineByPropertyName = true, Position = 0)]
+        public byte[] Data { get; set; }
+
+        [Parameter(Mandatory = false, ValueFromPipelineByPropertyName = true, Position = 1)]
+        public uint Channel { get; set; }
+
+        [Parameter(Mandatory = false, ValueFromPipelineByPropertyName = true, Position = 2)]
+        public uint Frequency { get; set; }
+
+        [Parameter(Mandatory = false, ValueFromPipelineByPropertyName = true)]
+        public SwitchParameter Raw { get; set; }
+
+        public SendSPIData()
+        {
+            this.Channel = 0;
+            this.Frequency = Unosquare.RaspberryIO.Gpio.SpiChannel.MinFrequency;
+        }
+
+        protected override void ProcessRecord()
+        {
+            var spiChannel = Unosquare.RaspberryIO.Pi.Spi.Channel0;
+            if (this.Channel == 1)
+            {
+                spiChannel = Unosquare.RaspberryIO.Pi.Spi.Channel1;
+                Unosquare.RaspberryIO.Pi.Spi.Channel1Frequency = (int)this.Frequency;
+            }
+            else
+            {
+                Unosquare.RaspberryIO.Pi.Spi.Channel0Frequency = (int)this.Frequency;
+            };
+
+            var responce = spiChannel.SendReceive(this.Data);
+            if (this.Raw)
+            {
+                WriteObject(responce);
+            }
+            else
+            {
+                SPIData spiData = new SPIData(this.Channel, this.Frequency, this.Data, responce);
+                WriteObject(spiData);
             }
         }
     }
