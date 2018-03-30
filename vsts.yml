@@ -3,7 +3,8 @@ resources:
 queue:
   name: PowerShell IoT
   demands: DotNetFramework
-
-
 steps:
-- powershell: inline 'pwsh -c ./build.ps1'
+- task: PowerShell@1
+  inputs:
+    scriptType: inlineScript
+    inlineScript: pwsh -c ./build.ps1
