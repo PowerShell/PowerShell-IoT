@@ -3,20 +3,30 @@
 
 Describe "PowerShell IoT tests" {
     BeforeAll {
-        Enter-PSSession -HostName raspberry -UserName pi
+        $Global:SESSION = New-PSSession -HostName raspberry -UserName pi
     }
     Context "I2C tests" {
         BeforeAll {
-            $PSVersionTable
-            Import-Module Microsoft.PowerShell.IoT.BME280
+            Invoke-Command -Session $Global:SESSION -ScriptBlock {
+                Import-Module Microsoft.PowerShell.IoT.BME280
+            }
+
         }
         It "Can get the the BME280 I2C device" {
-            $device = Get-BME280Device -Id 0x76
-            $device | Should -Not -BeNullOrEmpty
+            $device = Invoke-Command -Session $Global:SESSION -ScriptBlock {
+                return Get-BME280Device -Id 0x76
+            }
+            $device.GetType().Name | Should -Be "I2CDevice"
+            $device.Id | Should -Be 118
+            $device.FriendlyName | Should -Be "BME280"
         }
         It "Can get the BME280 data" {
-            $data = Get-BME280Data
-            $data | Should -Not -BeNullOrEmpty
+            $data = Invoke-Command -Session $Global:SESSION -ScriptBlock {
+                return Get-BME280Data
+            }
+            $data.Temperature | Should -Not -BeNullOrEmpty
+            $data.Pressure | Should -Not -BeNullOrEmpty
+            $data.Humidity | Should -Not -BeNullOrEmpty
         }
     }
 }
