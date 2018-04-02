@@ -28,6 +28,20 @@ For example, a cmdlet stack to turn on a light bulb might be:
 
 To see some examples of modules built on top of PowerShell IoT, see the [modules folder](/modules).
 
+### Supported platforms
+
+#### Supported devices
+
+* Raspberry Pi 3
+
+#### Supported operating systems
+
+* Raspbian Trusty
+
+### Documentation & Examples
+
+Please see our [docs folder here](/docs) for an API reference, pin layout and other docs. For examples, checkout our [examples folder](/Examples).
+
 ### Dependencies
 
 This project relies on [RaspberryIO](https://github.com/unosquare/raspberryio).
@@ -35,19 +49,18 @@ It's an easy-to-use .NET library for interacting with Raspberry Pi's IO function
 RaspberryIO is built on [Wiring Pi](http://wiringpi.com/) -
 a pin based GPIO access library written in C.
 
-### Supported devices
-
-* Raspberry Pi 3
-
-### Supported operating systems
-
-* Raspbian Trusty
-
 ## Installation
 
-### PowerShell Gallery
+### PowerShell Gallery & GitHub releases
 
-_Installation from the PowerShell Gallery coming soon._
+_Installation from the PowerShell Gallery and download from GitHub releases coming soon._
+
+### AppVeyor
+
+You can download the latest CI build from our [AppVeyor build here](https://ci.appveyor.com/project/PowerShell/powershell-iot).
+Go to the latest build, click on either of the images, then click on the artifacts tab.
+From there, you can download a zip of the latest CI build.
+>>>>>>> 32ebbd385a46f29eea44208d3f5f94234f73e1c3
 
 ### From Source
 

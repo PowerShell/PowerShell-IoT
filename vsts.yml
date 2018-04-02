@@ -1,0 +1,11 @@
+resources:
+- repo: self
+queue:
+  name: PowerShell IoT
+  demands: DotNetFramework
+steps:
+- task: PowerShell@1
+  displayName: Run Build
+  inputs:
+    scriptType: inlineScript
+    inlineScript: pwsh -c ./build.ps1
