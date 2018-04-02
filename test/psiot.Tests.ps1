@@ -31,38 +31,38 @@ Describe "PowerShell IoT tests" {
     }
     Context "GPIO tests" {
         It "Can get and set a GPIO's pin value" {
-            $before = Invoke-Command -Session $Global:SESSION -ScriptBlock {
+            $highValueResult = Invoke-Command -Session $Global:SESSION -ScriptBlock {
                 Set-GpioPin -Id 26 -Value High
                 return Get-GpioPin -Id 22
             }
-            $before.Id | Should -Be 22
-            $before.Value | Should -Be "High"
+            $highValueResult.Id | Should -Be 22
+            $highValueResult.Value | Should -Be "High"
 
-            $after = Invoke-Command -Session $Global:SESSION -ScriptBlock {
+            $lowValueResult = Invoke-Command -Session $Global:SESSION -ScriptBlock {
                 Set-GpioPin -Id 26 -Value Low
                 return Get-GpioPin -Id 22
             }
-            $before.Id | Should -Be 22
-            $before.Value | Should -Be "Low"
+            $lowValueResult.Id | Should -Be 22
+            $lowValueResult.Value | Should -Be "Low"
         }
         It "Can use the -Raw flag to get the raw value" {
             $rawValue = Invoke-Command -Session $Global:SESSION -ScriptBlock {
                 Set-GpioPin -Id 22 -Value High
                 return Get-GpioPin -Id 26 -Raw
             }
-            $rawValue | Should -Be "High"
+            $rawValue | Should -Be 1
         }
         It "Read non-connected pin with PullDown and return Low" {
             $result = Invoke-Command -Session $Global:SESSION -ScriptBlock {
                 return Get-GpioPin -Id 23 -PullMode PullDown -Raw
             }
-            $result | Should -Be "Low"
+            $result | Should -Be 0
         }
         It "Read non-connected pin with PullUp and return High" {
             $result = Invoke-Command -Session $Global:SESSION -ScriptBlock {
                 return Get-GpioPin -Id 23 -PullMode PullUp -Raw
             }
-            $result | Should -Be "High"
+            $result | Should -Be 1
         }
     }
     Context "SPI tests" {
