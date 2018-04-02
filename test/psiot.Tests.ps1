@@ -7,7 +7,7 @@ Describe "PowerShell IoT tests" {
     }
     Context "GPIO tests" {
         It "Can import the PowerShell IoT module" {
-            Invoke-Command -Session $Global:SESSION -ScriptBlock { Import-Module Microsoft.PowerShell.IoT } |
+            { Invoke-Command -Session $Global:SESSION -ScriptBlock { Import-Module Microsoft.PowerShell.IoT } } |
                 Should -Not -Throw
         }
     }
