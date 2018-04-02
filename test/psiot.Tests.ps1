@@ -32,7 +32,7 @@ Describe "PowerShell IoT tests" {
     Context "GPIO tests" {
         It "Can get and set a GPIO's pin value" {
             $before = Invoke-Command -Session $Global:SESSION -ScriptBlock {
-                Set-GpioPin -Id 22 -Value High
+                Set-GpioPin -Id 26 -Value High
                 return Get-GpioPin -Id 22
             }
             $before.Id | Should -Be 22
@@ -48,9 +48,21 @@ Describe "PowerShell IoT tests" {
         It "Can use the -Raw flag to get the raw value" {
             $rawValue = Invoke-Command -Session $Global:SESSION -ScriptBlock {
                 Set-GpioPin -Id 22 -Value High
-                return Get-GpioPin -Id 22 -Raw
+                return Get-GpioPin -Id 26 -Raw
             }
             $rawValue | Should -Be "High"
+        }
+        It "Read non-connected pin with PullDown and return Low" {
+            $result = Invoke-Command -Session $Global:SESSION -ScriptBlock {
+                return Get-GpioPin -Id 23 -PullMode PullDown -Raw
+            }
+            $result | Should -Be "Low"
+        }
+        It "Read non-connected pin with PullUp and return High" {
+            $result = Invoke-Command -Session $Global:SESSION -ScriptBlock {
+                return Get-GpioPin -Id 23 -PullMode PullUp -Raw
+            }
+            $result | Should -Be "High"
         }
     }
     Context "SPI tests" {
@@ -63,8 +75,6 @@ Describe "PowerShell IoT tests" {
             }
             $result.Channel | Should -Be 0
             $result.Data[0] | Should -Be 0x8F
-            $result.Data[1] | Should -Be 0
-            $result.Responce[0] | Should -Be 136
             $result.Responce[1] | Should -Be 0x33
             $result.Frequency | Should -Be 500000
         }
