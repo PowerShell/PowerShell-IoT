@@ -7,6 +7,7 @@ Describe "PowerShell IoT tests" {
     }
     Context "I2C tests" {
         BeforeAll {
+            $PSVersionTable
             Import-Module Microsoft.PowerShell.IoT.BME280
         }
         It "Can get the the BME280 I2C device" {
