@@ -53,4 +53,27 @@ Describe "PowerShell IoT tests" {
             $rawValue | Should -Be "High"
         }
     }
+    Context "SPI tests" {
+        # SPI test: LIS3DH motion sensor; datasheet: www.st.com/resource/en/datasheet/lis3dh.pdf
+        # Read "WHO_AM_I (0Fh)" register; value should be 0x33
+        It "Can read data from the LIS3DH motion sensor" {
+            $result = Invoke-Command -Session $Global:SESSION -ScriptBlock {
+                $d = @(0x8F,0x0)
+                return Send-SPIData -Channel 0 -Data $d
+            }
+            $result.Channel | Should -Be 0
+            $result.Data[0] | Should -Be 0x8F
+            $result.Data[1] | Should -Be 0
+            $result.Responce[0] | Should -Be 136
+            $result.Responce[1] | Should -Be 0x33
+            $result.Frequency | Should -Be 500000
+        }
+        It "Can use the -Raw flag to get the raw value" {
+            $result = Invoke-Command -Session $Global:SESSION -ScriptBlock {
+                $d = @(0x8F,0x0)
+                return Send-SPIData -Channel 0 -Data $d -Raw
+            }
+            $result[1] | Should -Be 0x33
+        }
+    }
 }
