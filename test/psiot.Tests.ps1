@@ -16,7 +16,7 @@ Describe "PowerShell IoT tests" {
             $device = Invoke-Command -Session $Global:SESSION -ScriptBlock {
                 return Get-BME280Device -Id 0x76
             }
-            $device.GetType().Name | Should -Be "I2CDevice"
+            $device | Should -Not -BeNullOrEmpty
             $device.Id | Should -Be 118
             $device.FriendlyName | Should -Be "BME280"
         }
