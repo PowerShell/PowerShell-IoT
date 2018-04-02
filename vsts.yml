@@ -8,4 +8,4 @@ steps:
   displayName: Run Build
   inputs:
     scriptType: inlineScript
-    inlineScript: pwsh -c ./build.ps1
+    inlineScript: pwsh -c ./tools/vsts.ps1
