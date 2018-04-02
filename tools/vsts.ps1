@@ -4,7 +4,7 @@ Push-Location "$PSScriptRoot/../"
 Invoke-Build
 
 # Move build to Pi
-./Move-PSIoTBuild.ps1 -Ip raspberry
+./Move-PSIoTBuild.ps1 -Ip raspberry -WithExample Microsoft.PowerShell.IoT.BME280
 
 # Run Pester tests
 Push-Location "test"

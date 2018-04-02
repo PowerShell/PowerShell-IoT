@@ -3,12 +3,19 @@
 
 Describe "PowerShell IoT tests" {
     BeforeAll {
-        $global:SESSION = New-PSSession -HostName raspberry -UserName pi
+        Enter-PSSession -HostName raspberry -UserName pi
     }
-    Context "GPIO tests" {
-        It "Can import the PowerShell IoT module" {
-            { Invoke-Command -Session $Global:SESSION -ScriptBlock { Import-Module Microsoft.PowerShell.IoT } } |
-                Should -Not -Throw
+    Context "I2C tests" {
+        BeforeAll {
+            Import-Module Microsoft.PowerShell.IoT.BME280
+        }
+        It "Can get the the BME280 I2C device" {
+            $device = Get-BME280Device -Id 0x76
+            $device | Should -Not -BeNullOrEmpty
+        }
+        It "Can get the BME280 data" {
+            $data = Get-BME280Data
+            $data | Should -Not -BeNullOrEmpty
         }
     }
 }
