@@ -3,11 +3,13 @@
 
 Describe "PowerShell IoT tests" {
     BeforeAll {
+        # This creates the session to the test Pi. The hostname maps to a random IP
         $Global:SESSION = New-PSSession -HostName raspberry -UserName pi
     }
     Context "I2C tests" {
         BeforeAll {
             Invoke-Command -Session $Global:SESSION -ScriptBlock {
+                # Import the example BME280 which wraps PowerShell IoT cmdlets
                 Import-Module Microsoft.PowerShell.IoT.BME280
             }
 
@@ -30,6 +32,14 @@ Describe "PowerShell IoT tests" {
         }
     }
     Context "GPIO tests" {
+        # GPIO pins can either act as an input or output pin. In other words,
+        # you can either set a pin's value or read a pin's value. For example,
+        # if you set pin 20 to "High" (aka 1) and attempt to read the value of
+        # pin 20, you will not get the result of your previous set operation.
+
+        # To get around this limitation, on the test Raspberry Pi we have two pins
+        # (22 and 26) connected. By doing this, we can set the value on pin 22 and
+        # read that value on pin 26. This next test demonstrates that.
         It "Can get and set a GPIO's pin value" {
             $highValueResult = Invoke-Command -Session $Global:SESSION -ScriptBlock {
                 Set-GpioPin -Id 26 -Value High
