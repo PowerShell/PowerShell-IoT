@@ -12,9 +12,13 @@ function Get-BME280Device
     (
         [ValidateNotNullOrEmpty()]
         [int]
-        $Id = 0x77
+        $Id = 0x77,
+
+        [ValidateNotNullOrEmpty()]
+        [string]
+        $FriendlyName = "BME280"
     )
-    $script:Device = Get-I2CDevice -Id $Id -FriendlyName BME280
+    $script:Device = Get-I2CDevice -Id $Id -FriendlyName $FriendlyName
     return $script:Device
 }
 
