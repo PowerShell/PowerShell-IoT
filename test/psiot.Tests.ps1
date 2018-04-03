@@ -57,8 +57,8 @@ Describe "PowerShell IoT tests" {
         }
         It "Can use the -Raw flag to get the raw value" {
             $rawValue = Invoke-Command -Session $Global:SESSION -ScriptBlock {
-                Set-GpioPin -Id 22 -Value High
-                return Get-GpioPin -Id 26 -Raw
+                Set-GpioPin -Id 26 -Value High
+                return Get-GpioPin -Id 22 -Raw
             }
             $rawValue | Should -Be 1
         }
