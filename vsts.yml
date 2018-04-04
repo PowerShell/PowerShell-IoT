@@ -9,3 +9,8 @@ steps:
   inputs:
     scriptType: inlineScript
     inlineScript: pwsh -c ./tools/vsts.ps1
+- task: PublishTestResults@2
+  displayName: Publish Test Results
+  inputs:
+    testRunner: XUnit
+    testResultsFiles: '**\Test*.xml'
