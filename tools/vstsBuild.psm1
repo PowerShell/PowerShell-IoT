@@ -68,7 +68,7 @@ function Publish-VstsBuildArtifact
     Write-VstsInformation -message "Publishing artifacts: $filter"
 
     # In VSTS, publish artifacts appropriately
-    $files = Get-ChildItem -Path $filter -Recurse | Select-Object -ExpandProperty FullName
+    $files = Get-ChildItem -Path $filter -Recurse -File | Select-Object -ExpandProperty FullName
     $destinationPath = Join-Path (Get-StagingDirectory) -ChildPath $Bucket
     if(-not (Test-Path $destinationPath))
     {
