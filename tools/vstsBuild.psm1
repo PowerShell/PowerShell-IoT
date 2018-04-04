@@ -64,11 +64,10 @@ function Publish-VstsBuildArtifact
         [int]$ExpectedCount = -1
     )
     $ErrorActionPreference = 'Continue'
-    $filter = Join-Path -Path $ArtifactPath -ChildPath '*'
-    Write-VstsInformation -message "Publishing artifacts: $filter"
+    Write-VstsInformation -message "Publishing artifacts: $ArtifactPath"
 
     # In VSTS, publish artifacts appropriately
-    $files = Get-ChildItem -Path $filter | Select-Object -ExpandProperty FullName
+    $files = Get-Item -Path $ArtifactPath | Select-Object -ExpandProperty FullName
     $destinationPath = Join-Path (Get-StagingDirectory) -ChildPath $Bucket
     if(-not (Test-Path $destinationPath))
     {
