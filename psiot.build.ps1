@@ -10,7 +10,7 @@ function NeedsRestore($rootPath) {
     return ($projectAssets -eq $null) -or ((Get-ChildItem $rootPath).Length -gt $projectAssets.Length)
 }
 
-task SetupDotNet -Before Clean, Build, Package {
+task SetupDotNet -Before Restore, Clean, Build, Package {
 
     $requiredSdkVersion = "2.0.0"
 
