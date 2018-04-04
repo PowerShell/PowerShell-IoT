@@ -31,7 +31,7 @@ task Build Restore, {
 task Test {
     Install-Module Pester -Force -Scope CurrentUser
     Push-Location $PSScriptRoot\test
-    $res = Invoke-Pester -OutputFormat NUnitXml -OutputFile TestsResults.xml -PassThru;
+    $res = Invoke-Pester -OutputFormat NUnitXml -OutputFile TestsResults.xml -PassThru
     if ($env:APPVEYOR) {
         (New-Object System.Net.WebClient).UploadFile("https://ci.appveyor.com/api/testresults/nunit/$($env:APPVEYOR_JOB_ID)", (Resolve-Path .\TestsResults.xml));
     }
