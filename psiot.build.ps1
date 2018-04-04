@@ -99,7 +99,7 @@ task Test {
     Pop-Location
 }
 
-task Package Build, {
+task Package Clean, Build, {
     if ((Test-Path "$PSScriptRoot\out")) {
         Remove-Item -Path $PSScriptRoot\out -Recurse -Force
     }
@@ -120,4 +120,4 @@ task Package Build, {
 }
 
 # The default task is to run the entire CI build
-task . Clean, Build, Package
+task . Package
