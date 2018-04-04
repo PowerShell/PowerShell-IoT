@@ -1,5 +1,7 @@
 Push-Location "$PSScriptRoot/../"
 
+Install-Module InvokeBuild -Scope CurrentUser
+
 # Build and package for Pi
 Invoke-Build
 
