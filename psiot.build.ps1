@@ -56,7 +56,8 @@ task Package Clean, Build, {
 
     if ($env:TF_BUILD) {
         Import-Module "$PSScriptRoot\tools\vstsBuild.psm1"
-        Publish-VstsBuildArtifact -ArtifactPath "$PSScriptRoot\out\Microsoft.PowerShell.IoT"
+        "" > "$PSScriptRoot\out\Microsoft.PowerShell.IoT\runtimes\empty.txt"
+        Publish-VstsBuildArtifact -ArtifactPath "$PSScriptRoot\out\Microsoft.PowerShell.IoT" -Bucket "Microsoft.PowerShell.IoT"
     }
 }
 
