@@ -13,7 +13,7 @@ The default I2C address is 0x77. It can be changed to 0x76 by connecting SDO to 
 
 Wiring diagram with Raspberry Pi 3 is like this:
 
-![bme280_schema](https://user-images.githubusercontent.com/11860095/38394384-1899c3d4-38e3-11e8-8f8d-a93918971773.png
+![bme280_schema](https://user-images.githubusercontent.com/11860095/38394384-1899c3d4-38e3-11e8-8f8d-a93918971773.png)
 
 ## Software setup
 
