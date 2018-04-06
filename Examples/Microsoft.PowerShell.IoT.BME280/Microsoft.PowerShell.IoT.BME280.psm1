@@ -51,7 +51,10 @@ function Get-BME280Data
         [string] $Mode,
 
 		[Parameter(Mandatory=$false)]
-        [string] $Oversampling
+        [string] $Oversampling,
+
+        [Parameter(Mandatory=$false)]
+        [switch] $Fahrenheit
     )
     $Device = CreateDeviceIfNotExist -Device $Device
 
@@ -74,6 +77,10 @@ function Get-BME280Data
 
     [int] $TFine = Calc-T-Fine $adc_T $script:CalibrationData[$Device]
     [float] $Temperature = (($TFine * 5 + 128) -shr 8) / [float]100;
+    if ($Fahrenheit)
+    {
+        $Temperature = $Temperature * 1.8 + 32
+    }
 
     [float] $Pressure = Compensate_P $adc_P $script:CalibrationData[$Device] $TFine
 	$Pressure = $Pressure / 100
