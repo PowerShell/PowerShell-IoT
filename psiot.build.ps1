@@ -31,7 +31,7 @@ task Build Restore, {
 task Test {
     Install-Module Pester -Force -Scope CurrentUser
     Push-Location $PSScriptRoot\test
-    $res = Invoke-Pester -OutputFormat NUnitXml -OutputFile TestsResults.xml -PassThru;
+    $res = Invoke-Pester -OutputFormat NUnitXml -OutputFile TestsResults.xml -PassThru
     if ($env:APPVEYOR) {
         (New-Object System.Net.WebClient).UploadFile("https://ci.appveyor.com/api/testresults/nunit/$($env:APPVEYOR_JOB_ID)", (Resolve-Path .\TestsResults.xml));
     }
@@ -39,7 +39,7 @@ task Test {
     Pop-Location
 }
 
-task Package Build, {
+task Package Clean, Build, {
     if ((Test-Path "$PSScriptRoot\out")) {
         Remove-Item -Path $PSScriptRoot\out -Recurse -Force
     }
@@ -53,7 +53,12 @@ task Package Build, {
 
     Copy-Item -Path "$PSScriptRoot\src\Microsoft.PowerShell.IoT\Microsoft.PowerShell.IoT.psd1" -Destination "$PSScriptRoot\out\Microsoft.PowerShell.IoT\" -Force
     Copy-Item -Path "$PSScriptRoot\src\Microsoft.PowerShell.IoT\bin\Debug\netcoreapp2.0\publish\*" -Destination "$PSScriptRoot\out\Microsoft.PowerShell.IoT\" -Force -Recurse
+
+    if ($env:TF_BUILD) {
+        Import-Module "$PSScriptRoot\tools\vstsBuild.psm1"
+        Publish-VstsBuildArtifact -ArtifactPath "$PSScriptRoot\out\Microsoft.PowerShell.IoT" -Bucket "Microsoft.PowerShell.IoT"
+    }
 }
 
 # The default task is to run the entire CI build
-task . Clean, Build, Test, Package
+task . Package

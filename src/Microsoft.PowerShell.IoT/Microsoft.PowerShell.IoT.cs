@@ -90,14 +90,14 @@ namespace Microsoft.PowerShell.IoT
         public uint Channel { get; set; }
         public uint Frequency { get; set; }
         public byte[] Data { get; set; }
-        public byte[] Responce { get; set; }
+        public byte[] Response { get; set; }
         
-        public SPIData(uint channel, uint frequency, byte[] data, byte[] responce)
+        public SPIData(uint channel, uint frequency, byte[] data, byte[] response)
         {
             this.Channel = channel;
             this.Frequency = frequency;
             this.Data = data;
-            this.Responce = responce;
+            this.Response = response;
         }
     }
 
@@ -327,14 +327,14 @@ namespace Microsoft.PowerShell.IoT
                 Unosquare.RaspberryIO.Pi.Spi.Channel0Frequency = (int)this.Frequency;
             };
 
-            var responce = spiChannel.SendReceive(this.Data);
+            var response = spiChannel.SendReceive(this.Data);
             if (this.Raw)
             {
-                WriteObject(responce);
+                WriteObject(response);
             }
             else
             {
-                SPIData spiData = new SPIData(this.Channel, this.Frequency, this.Data, responce);
+                SPIData spiData = new SPIData(this.Channel, this.Frequency, this.Data, response);
                 WriteObject(spiData);
             }
         }

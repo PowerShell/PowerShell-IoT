@@ -8,4 +8,9 @@ steps:
   displayName: Run Build
   inputs:
     scriptType: inlineScript
-    inlineScript: pwsh -c ./build.ps1
+    inlineScript: pwsh -c ./tools/vsts.ps1
+- task: PublishTestResults@2
+  displayName: Publish Test Results
+  inputs:
+    testRunner: NUnit
+    testResultsFiles: '**\Test*.xml'
