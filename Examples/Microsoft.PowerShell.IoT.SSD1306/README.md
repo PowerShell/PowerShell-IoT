@@ -4,11 +4,11 @@ This PowerShell module is for working with [small I2C OLED displays](https://www
 
 ## Hardware setup
 
-There are many versions of small OLED displays; in this example we'll use a version based on I2C interface.
+There are many versions of small OLED displays; in this example we'll use a 128x64 version based on I2C interface.
 
 Wiring diagram with Raspberry Pi 3 is like this:
 
-zzz
+![ssd1306_schema](https://user-images.githubusercontent.com/11860095/38397481-a8d7eea8-38f2-11e8-8986-eae21e6f384e.png)
 
 ## Software setup
 
