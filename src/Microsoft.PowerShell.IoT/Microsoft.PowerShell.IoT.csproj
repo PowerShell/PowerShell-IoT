@@ -6,7 +6,7 @@
 
   <ItemGroup>
     <PackageReference Include="System.Management.Automation" Version="6.0.0-rc.2" />
-    <PackageReference Include="Unosquare.Raspberry.IO" Version="0.13.0" />
+    <PackageReference Include="Unosquare.Raspberry.IO" Version="0.14.0" />
   </ItemGroup>
 
 </Project>
