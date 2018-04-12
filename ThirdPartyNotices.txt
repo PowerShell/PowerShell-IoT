@@ -6,7 +6,7 @@ The software is based on or incorporates material from the projects listed below
 
 
 -------------------------------------------------
-File:  Unosquare.Rasberry.IO 0.12.0
+File:  Unosquare.Rasberry.IO 0.14.0
 -------------------------------------------------
 
 Copyright (c) 2016 Unosquare

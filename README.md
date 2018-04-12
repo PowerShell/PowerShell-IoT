@@ -22,21 +22,22 @@ For example, a cmdlet stack to turn on a light bulb might be:
 
 ```powershell
 > Set-Light On # Your user types this / you make this cmdlet
-> Set-GpioPin -Pin 4 # You use this to make that^ / we make this cmdlet
+> Set-GpioPin -Id 4 -Value High # You use this to make that^ / we make this cmdlet
 > # Our code that makes that^
 ```
 
-To see some examples of modules built on top of PowerShell IoT, see the [modules folder](/modules).
+To see some examples of modules built on top of PowerShell IoT, see the [Examples folder](/Examples).
 
 ### Supported platforms
 
 #### Supported devices
 
 * Raspberry Pi 3
+* Raspberry Pi 2
 
 #### Supported operating systems
 
-* Raspbian Trusty
+* Raspbian Stretch
 
 ### Documentation & Examples
 
@@ -60,7 +61,6 @@ _Installation from the PowerShell Gallery and download from GitHub releases comi
 You can download the latest CI build from our [AppVeyor build here](https://ci.appveyor.com/project/PowerShell/powershell-iot).
 Go to the latest build, click on either of the images, then click on the artifacts tab.
 From there, you can download a zip of the latest CI build.
->>>>>>> 32ebbd385a46f29eea44208d3f5f94234f73e1c3
 
 ### From Source
 
