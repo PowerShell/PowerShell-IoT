@@ -22,21 +22,22 @@ For example, a cmdlet stack to turn on a light bulb might be:
 
 ```powershell
 > Set-Light On # Your user types this / you make this cmdlet
-> Set-GpioPin -Id 4 # You use this to make that^ / we make this cmdlet
+> Set-GpioPin -Id 4 -Value High # You use this to make that^ / we make this cmdlet
 > # Our code that makes that^
 ```
 
-To see some examples of modules built on top of PowerShell IoT, see the [modules folder](/modules).
+To see some examples of modules built on top of PowerShell IoT, see the [Examples folder](/Examples).
 
 ### Supported platforms
 
 #### Supported devices
 
 * Raspberry Pi 3
+* Raspberry Pi 2
 
 #### Supported operating systems
 
-* Raspbian Trusty
+* Raspbian Stretch
 
 ### Documentation & Examples
 
