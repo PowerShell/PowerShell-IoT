@@ -1,8 +1,10 @@
 # Example module Microsoft.PowerShell.IoT.Plant
 
 This PowerShell module is for automating taking care of potted indoor plants.
+
 This module allows a PowerShell script to control lights and water a plant when needed based on soil moisture level.
-This showcases GPIO functionality of Microsoft.PowerShell.IoT module.
+
+This showcases GPIO functionality of [the Microsoft.PowerShell.IoT module](../../README.md).
 
 ## Hardware setup
 
