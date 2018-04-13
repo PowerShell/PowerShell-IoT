@@ -6,7 +6,7 @@
     <Authors>Microsoft Corporation</Authors>
     <Company>Microsoft Corporation</Company>
     <Product>Microsoft.PowerShell.IoT</Product>
-    <PackageId>MyApp</PackageId>
+    <PackageId>Microsoft.PowerShell.IoT</PackageId>
     <AssemblyVersion>0.1.1.0</AssemblyVersion>
     <FileVersion>0.1.1.0</FileVersion>
     <Copyright>© Microsoft Corporation. All rights reserved.</Copyright>
