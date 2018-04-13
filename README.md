@@ -2,6 +2,9 @@
 
 [![Build status](https://ci.appveyor.com/api/projects/status/ipvxu77rxb5ou8gb?svg=true)](https://ci.appveyor.com/project/PowerShell/powershell-iot)
 [![Travis](https://img.shields.io/travis/rust-lang/rust.svg?logo=travis)](https://travis-ci.com/PowerShell/PowerShell-IoT)
+[![PowerShell Gallery](https://img.shields.io/powershellgallery/v/Microsoft.PowerShell.IoT.svg)](https://www.powershellgallery.com/packages/Microsoft.PowerShell.IoT/)
+
+> Note: PowerShell IoT is still in Preview
 
 A PowerShell module for interacting with hardware sensors and devices using common protocols: GPIO, I2C & SPI.
 
@@ -52,15 +55,31 @@ a pin based GPIO access library written in C.
 
 ## Installation
 
-### PowerShell Gallery & GitHub releases
+### PowerShell Gallery
 
-_Installation from the PowerShell Gallery and download from GitHub releases coming soon._
+You can grab the latest version of PowerShell IoT by running:
+
+```powershell
+Install-Module Microsoft.PowerShell.IoT
+```
+
+Then see the section on [running](#Running).
+
+If you want to write a module that uses PowerShell IoT, include it in the `RequiredModules` field of your module manifest.
+
+### GitHub releases
+
+You can also manually download the zipped up module from the [releases](https://github.com/PowerShell/PowerShell-IoT/releases).
+
+Then see the section on [running](#Running).
 
 ### AppVeyor
 
 You can download the latest CI build from our [AppVeyor build here](https://ci.appveyor.com/project/PowerShell/powershell-iot).
 Go to the latest build, click on either of the images, then click on the artifacts tab.
 From there, you can download a zip of the latest CI build.
+
+Then see the section on [running](#Running).
 
 ### From Source
 
