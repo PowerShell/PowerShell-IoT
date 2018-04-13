@@ -85,7 +85,7 @@ Describe "PowerShell IoT tests" {
             }
             $result.Channel | Should -Be 0
             $result.Data[0] | Should -Be 0x8F
-            $result.Responce[1] | Should -Be 0x33
+            $result.Response[1] | Should -Be 0x33
             $result.Frequency | Should -Be 500000
         }
         It "Can use the -Raw flag to get the raw value" {
