@@ -154,11 +154,16 @@ Get-GpioPin 2 # gets the data from GPIO pin 2
 
 #### Testing
 
-You can run tests,
-but they don't do anything right now:
+You can run tests, but they require a particular setup. Here is how you run them:
 
 ```powershell
 ./build.ps1 -Test
 ```
 
-We will investigate standing up a test rig of supported devices and OS's so that we can test against actual hardware.
+The setup required:
+
+* For I2C: An [Adafruit BME280 I2C or SPI Temperature Humidity Pressure Sensor](https://www.adafruit.com/product/2652)
+* For GPIO: Bend pins 26 and 22 to touch each other or connect them in some way
+* For SPI:  An [Adafruit LIS3DH Triple-Axis Accelerometer](https://www.adafruit.com/product/2809)
+
+We currently have a build agent that will deploy PR code onto a test Raspberry Pi and run the tests found in the `test` directory.
