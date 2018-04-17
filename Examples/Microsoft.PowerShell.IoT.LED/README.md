@@ -42,7 +42,9 @@ Import-Module ./PowerShell-IoT/Examples/Microsoft.PowerShell.IoT.LED
 ```powershell
 # Turn LED on
 Set-Led -Pin 1 -State On
+# or
 Set-Led 1 On
+# or
 [PSCustomObject]@{Pin=1; State="On"} | Set-Led
 
 # Turn LED off
