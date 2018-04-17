@@ -49,11 +49,11 @@ Import-Module ./PowerShell-IoT/Examples/Microsoft.PowerShell.IoT.Plant
 PS /home/pi> # working with light
 PS /home/pi> Set-Light On
 PS /home/pi> Set-Light Off
-PS /home/pi> 
+PS /home/pi>
 PS /home/pi> # working with water
 PS /home/pi> Start-Water
 PS /home/pi> Stop-Water
-PS /home/pi> 
+PS /home/pi>
 PS /home/pi> # reading soil moisture level
 PS /home/pi> Read-SoilIsDry
 ```
