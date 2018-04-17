@@ -63,7 +63,7 @@ You can grab the latest version of PowerShell IoT by running:
 Install-Module Microsoft.PowerShell.IoT
 ```
 
-Then see the section on [running](#Running).
+Then see the section on [running](#running).
 
 If you want to write a module that uses PowerShell IoT, include it in the `RequiredModules` field of your module manifest.
 
@@ -71,7 +71,7 @@ If you want to write a module that uses PowerShell IoT, include it in the `Requi
 
 You can also manually download the zipped up module from the [releases](https://github.com/PowerShell/PowerShell-IoT/releases).
 
-Then see the section on [running](#Running).
+Then see the section on [running](#running).
 
 ### AppVeyor
 
@@ -79,7 +79,7 @@ You can download the latest CI build from our [AppVeyor build here](https://ci.a
 Go to the latest build, click on either of the images, then click on the artifacts tab.
 From there, you can download a zip of the latest CI build.
 
-Then see the section on [running](#Running).
+Then see the section on [running](#running).
 
 ### From Source
 
