@@ -63,6 +63,8 @@ You can grab the latest version of PowerShell IoT by running:
 Install-Module Microsoft.PowerShell.IoT
 ```
 
+Please note that since this module works with Hardware, higher privileges are required (run PowerShell with `sudo`, or as `root` user) 
+
 Then see the section on [running](#running).
 
 If you want to write a module that uses PowerShell IoT, include it in the `RequiredModules` field of your module manifest.
@@ -144,6 +146,7 @@ Alternatively, just import the `.psd1`:
 ```powershell
 Import-Module /path/to/Microsoft.PowerShell.IoT/Microsoft.PowerShell.IoT.psd1
 ```
+Hint: PowerShell modules installed with higher previleges are located on `/usr/local/share/powershell/Modules/` , so the path will be something like `/usr/local/share/powershell/Modules/Microsoft.PowerShell.IoT/_currentVersion_`
 
 At this point you can now mess with the module:
 
