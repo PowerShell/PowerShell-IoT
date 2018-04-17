@@ -12,7 +12,7 @@ Hardware pieces:
 
 * [Breadboard](https://en.wikipedia.org/wiki/Breadboard) (Optional)
 * Male to female [jumper wires](https://en.wikipedia.org/wiki/Jump_wire)
-* 1 1kΩ resistor
+* 1 270Ω resistor
 * A [single-color LED](http://upload.wikimedia.org/wikipedia/commons/e/e8/LEDs.jpg)
 
 ## Wiring diagram
