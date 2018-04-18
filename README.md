@@ -60,8 +60,11 @@ a pin based GPIO access library written in C.
 You can grab the latest version of PowerShell IoT by running:
 
 ```powershell
+sudo pwsh
 Install-Module Microsoft.PowerShell.IoT
 ```
+
+Please note that since this module works with Hardware, higher privileges are required (run PowerShell with `sudo`, or as `root` user) 
 
 Then see the section on [running](#running).
 
