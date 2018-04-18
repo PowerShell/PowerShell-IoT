@@ -60,6 +60,7 @@ a pin based GPIO access library written in C.
 You can grab the latest version of PowerShell IoT by running:
 
 ```powershell
+sudo pwsh
 Install-Module Microsoft.PowerShell.IoT
 ```
 
@@ -146,7 +147,6 @@ Alternatively, just import the `.psd1`:
 ```powershell
 Import-Module /path/to/Microsoft.PowerShell.IoT/Microsoft.PowerShell.IoT.psd1
 ```
-Hint: PowerShell modules installed with higher previleges are located on `/usr/local/share/powershell/Modules/` , so the path will be something like `/usr/local/share/powershell/Modules/Microsoft.PowerShell.IoT/_currentVersion_`
 
 At this point you can now mess with the module:
 
