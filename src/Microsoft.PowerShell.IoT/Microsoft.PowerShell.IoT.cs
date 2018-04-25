@@ -128,6 +128,7 @@ namespace Microsoft.PowerShell.IoT
                 {
                     throw new PlatformNotSupportedException(Resources.ErrNeedRootPrivileges, e);
                 }
+                throw;
             }
         }
     }
@@ -192,6 +193,7 @@ namespace Microsoft.PowerShell.IoT
                 {
                     throw new PlatformNotSupportedException(Resources.ErrNeedRootPrivileges, e);
                 }
+                throw;
             }
         }
     }
@@ -228,6 +230,7 @@ namespace Microsoft.PowerShell.IoT
                 {
                     throw new PlatformNotSupportedException(Resources.ErrNeedRootPrivileges, e);
                 }
+                throw;
             }
         }
     }
@@ -269,6 +272,7 @@ namespace Microsoft.PowerShell.IoT
                 {
                     throw new PlatformNotSupportedException(Resources.ErrNeedRootPrivileges, e);
                 }
+                throw;
             }
         }
     }
@@ -339,6 +343,7 @@ namespace Microsoft.PowerShell.IoT
                 {
                     throw new PlatformNotSupportedException(Resources.ErrNeedRootPrivileges, e);
                 }
+                throw;
             }
         }
     }
@@ -396,6 +401,7 @@ namespace Microsoft.PowerShell.IoT
                 {
                     throw new PlatformNotSupportedException(Resources.ErrNeedRootPrivileges, e);
                 }
+                throw;
             }
         }
     }
