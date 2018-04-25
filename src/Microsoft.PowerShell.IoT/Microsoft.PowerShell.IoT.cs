@@ -118,7 +118,17 @@ namespace Microsoft.PowerShell.IoT
 
         protected override void ProcessRecord()
         {
-            WriteObject(new I2CDevice(Unosquare.RaspberryIO.Pi.I2C.AddDevice(this.Id), this.Id, this.FriendlyName));
+            try
+            {
+                WriteObject(new I2CDevice(Unosquare.RaspberryIO.Pi.I2C.AddDevice(this.Id), this.Id, this.FriendlyName));
+            }
+            catch (System.TypeInitializationException e) // Unosquare.RaspberryIO.Gpio.GpioController.Initialize throws this TypeInitializationException
+            {
+                if (!Unosquare.RaspberryIO.Computer.SystemInfo.Instance.IsRunningAsRoot)
+                {
+                    throw new PlatformNotSupportedException(Resources.ErrNeedRootPrivileges, e);
+                }
+            }
         }
     }
 
@@ -145,32 +155,42 @@ namespace Microsoft.PowerShell.IoT
 
         protected override void ProcessRecord()
         {
-            if (this.ByteCount > 1)
+            try
             {
-                this.Device.device.Write((byte)this.Register);
-                byte[] value = this.Device.device.Read(this.ByteCount);
-                if (this.Raw)
+                if (this.ByteCount > 1)
                 {
-                    WriteObject(value);
+                    this.Device.device.Write((byte)this.Register);
+                    byte[] value = this.Device.device.Read(this.ByteCount);
+                    if (this.Raw)
+                    {
+                        WriteObject(value);
+                    }
+                    else
+                    {
+                        I2CDeviceRegisterData result = new I2CDeviceRegisterData(this.Device, this.Register);
+                        result.Data = value;
+                        WriteObject(result);
+                    }
                 }
                 else
                 {
-                    I2CDeviceRegisterData result = new I2CDeviceRegisterData(this.Device, this.Register);
-                    result.Data = value;
-                    WriteObject(result);
+                    byte value = this.Device.device.ReadAddressByte(this.Register);
+                    if (this.Raw)
+                    {
+                        WriteObject(value);
+                    }
+                    else
+                    {
+                        I2CDeviceRegisterData result = new I2CDeviceRegisterData(this.Device, this.Register, new byte[1] { value });
+                        WriteObject(result);
+                    }
                 }
             }
-            else
+            catch (System.TypeInitializationException e) // Unosquare.RaspberryIO.Gpio.GpioController.Initialize throws this TypeInitializationException
             {
-                byte value = this.Device.device.ReadAddressByte(this.Register);
-                if (this.Raw)
+                if (!Unosquare.RaspberryIO.Computer.SystemInfo.Instance.IsRunningAsRoot)
                 {
-                    WriteObject(value);
-                }
-                else
-                {
-                    I2CDeviceRegisterData result = new I2CDeviceRegisterData(this.Device, this.Register, new byte[1] { value });
-                    WriteObject(result);
+                    throw new PlatformNotSupportedException(Resources.ErrNeedRootPrivileges, e);
                 }
             }
         }
@@ -193,11 +213,21 @@ namespace Microsoft.PowerShell.IoT
 
         protected override void ProcessRecord()
         {
-            this.Device.device.WriteAddressByte(this.Register, this.Data[0]);
-            if (this.PassThru)
+            try
             {
-                I2CDeviceRegisterData result = new I2CDeviceRegisterData(this.Device, this.Register, this.Data);
-                WriteObject(result);
+                this.Device.device.WriteAddressByte(this.Register, this.Data[0]);
+                if (this.PassThru)
+                {
+                    I2CDeviceRegisterData result = new I2CDeviceRegisterData(this.Device, this.Register, this.Data);
+                    WriteObject(result);
+                }
+            }
+            catch (System.TypeInitializationException e) // Unosquare.RaspberryIO.Gpio.GpioController.Initialize throws this TypeInitializationException
+            {
+                if (!Unosquare.RaspberryIO.Computer.SystemInfo.Instance.IsRunningAsRoot)
+                {
+                    throw new PlatformNotSupportedException(Resources.ErrNeedRootPrivileges, e);
+                }
             }
         }
     }
@@ -216,18 +246,28 @@ namespace Microsoft.PowerShell.IoT
 
         protected override void ProcessRecord()
         {
-            if (this.Id != null)
+            try
             {
-                foreach (int pinId in this.Id)
+                if (this.Id != null)
                 {
-                    var pin = Unosquare.RaspberryIO.Pi.Gpio[pinId];
-                    pin.PinMode = Unosquare.RaspberryIO.Gpio.GpioPinDriveMode.Output;
-                    pin.Write((Unosquare.RaspberryIO.Gpio.GpioPinValue)this.Value);
-                    if (this.PassThru)
+                    foreach (int pinId in this.Id)
                     {
-                        GpioPinData pinData = new GpioPinData(pinId, this.Value, pin);
-                        WriteObject(pinData);
+                        var pin = Unosquare.RaspberryIO.Pi.Gpio[pinId];
+                        pin.PinMode = Unosquare.RaspberryIO.Gpio.GpioPinDriveMode.Output;
+                        pin.Write((Unosquare.RaspberryIO.Gpio.GpioPinValue)this.Value);
+                        if (this.PassThru)
+                        {
+                            GpioPinData pinData = new GpioPinData(pinId, this.Value, pin);
+                            WriteObject(pinData);
+                        }
                     }
+                }
+            }
+            catch (System.TypeInitializationException e) // Unosquare.RaspberryIO.Gpio.GpioController.Initialize throws this TypeInitializationException
+            {
+                if (!Unosquare.RaspberryIO.Computer.SystemInfo.Instance.IsRunningAsRoot)
+                {
+                    throw new PlatformNotSupportedException(Resources.ErrNeedRootPrivileges, e);
                 }
             }
         }
@@ -247,47 +287,57 @@ namespace Microsoft.PowerShell.IoT
 
         protected override void ProcessRecord()
         {
-            ArrayList pinList = new ArrayList();
+            try
+            {
+                ArrayList pinList = new ArrayList();
 
-            if ((this.Id == null) || (this.Id.Length <= 0))
-            {
-                foreach (var pin in Unosquare.RaspberryIO.Pi.Gpio.Pins)
+                if ((this.Id == null) || (this.Id.Length <= 0))
                 {
-                    pinList.Add(pin.PinNumber);
-                }
-            }
-            else
-            {
-                pinList.AddRange(this.Id);
-            }
-
-            foreach(int pinId in pinList)
-            {
-                var pin = Unosquare.RaspberryIO.Pi.Gpio[pinId];
-                try
-                {
-                    pin.PinMode = Unosquare.RaspberryIO.Gpio.GpioPinDriveMode.Input;
-                    if (this.PullMode.HasValue)
+                    foreach (var pin in Unosquare.RaspberryIO.Pi.Gpio.Pins)
                     {
-                        pin.InputPullMode = (Unosquare.RaspberryIO.Gpio.GpioPinResistorPullMode)this.PullMode.Value;
-                    };
-                }
-                catch (System.NotSupportedException)
-                {
-                    // We want to avoid errors like
-                    // System.NotSupportedException : Get - GpioPin : Pin Pin15 'BCM 14 (UART Transmit)' does not support mode 'Input'.Pin capabilities are limited to: UARTTXD
-                    // at the same time we need to return PinInfo for such pins, so we need to continue processing
-                }
-                bool pinBoolValue = pin.Read();
-
-                if (this.Raw)
-                {
-                    WriteObject(pinBoolValue ? SignalLevel.High : SignalLevel.Low);
+                        pinList.Add(pin.PinNumber);
+                    }
                 }
                 else
                 {
-                    GpioPinData pinData = new GpioPinData(pinId, pinBoolValue ? SignalLevel.High : SignalLevel.Low, pin);
-                    WriteObject(pinData);
+                    pinList.AddRange(this.Id);
+                }
+
+                foreach (int pinId in pinList)
+                {
+                    var pin = Unosquare.RaspberryIO.Pi.Gpio[pinId];
+                    try
+                    {
+                        pin.PinMode = Unosquare.RaspberryIO.Gpio.GpioPinDriveMode.Input;
+                        if (this.PullMode.HasValue)
+                        {
+                            pin.InputPullMode = (Unosquare.RaspberryIO.Gpio.GpioPinResistorPullMode)this.PullMode.Value;
+                        };
+                    }
+                    catch (System.NotSupportedException)
+                    {
+                        // We want to avoid errors like
+                        // System.NotSupportedException : Get - GpioPin : Pin Pin15 'BCM 14 (UART Transmit)' does not support mode 'Input'.Pin capabilities are limited to: UARTTXD
+                        // at the same time we need to return PinInfo for such pins, so we need to continue processing
+                    }
+                    bool pinBoolValue = pin.Read();
+
+                    if (this.Raw)
+                    {
+                        WriteObject(pinBoolValue ? SignalLevel.High : SignalLevel.Low);
+                    }
+                    else
+                    {
+                        GpioPinData pinData = new GpioPinData(pinId, pinBoolValue ? SignalLevel.High : SignalLevel.Low, pin);
+                        WriteObject(pinData);
+                    }
+                }
+            }
+            catch (System.TypeInitializationException e) // Unosquare.RaspberryIO.Gpio.GpioController.Initialize throws this TypeInitializationException
+            {
+                if (!Unosquare.RaspberryIO.Computer.SystemInfo.Instance.IsRunningAsRoot)
+                {
+                    throw new PlatformNotSupportedException(Resources.ErrNeedRootPrivileges, e);
                 }
             }
         }
@@ -316,26 +366,36 @@ namespace Microsoft.PowerShell.IoT
 
         protected override void ProcessRecord()
         {
-            var spiChannel = Unosquare.RaspberryIO.Pi.Spi.Channel0;
-            if (this.Channel == 1)
+            try
             {
-                spiChannel = Unosquare.RaspberryIO.Pi.Spi.Channel1;
-                Unosquare.RaspberryIO.Pi.Spi.Channel1Frequency = (int)this.Frequency;
-            }
-            else
-            {
-                Unosquare.RaspberryIO.Pi.Spi.Channel0Frequency = (int)this.Frequency;
-            };
+                var spiChannel = Unosquare.RaspberryIO.Pi.Spi.Channel0;
+                if (this.Channel == 1)
+                {
+                    spiChannel = Unosquare.RaspberryIO.Pi.Spi.Channel1;
+                    Unosquare.RaspberryIO.Pi.Spi.Channel1Frequency = (int)this.Frequency;
+                }
+                else
+                {
+                    Unosquare.RaspberryIO.Pi.Spi.Channel0Frequency = (int)this.Frequency;
+                };
 
-            var response = spiChannel.SendReceive(this.Data);
-            if (this.Raw)
-            {
-                WriteObject(response);
+                var response = spiChannel.SendReceive(this.Data);
+                if (this.Raw)
+                {
+                    WriteObject(response);
+                }
+                else
+                {
+                    SPIData spiData = new SPIData(this.Channel, this.Frequency, this.Data, response);
+                    WriteObject(spiData);
+                }
             }
-            else
+            catch (System.TypeInitializationException e) // Unosquare.RaspberryIO.Gpio.GpioController.Initialize throws this TypeInitializationException
             {
-                SPIData spiData = new SPIData(this.Channel, this.Frequency, this.Data, response);
-                WriteObject(spiData);
+                if (!Unosquare.RaspberryIO.Computer.SystemInfo.Instance.IsRunningAsRoot)
+                {
+                    throw new PlatformNotSupportedException(Resources.ErrNeedRootPrivileges, e);
+                }
             }
         }
     }
