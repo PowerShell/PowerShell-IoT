@@ -1,14 +1,14 @@
 # Example module Microsoft.PowerShell.IoT.ADXL345
 
-This PowerShell module is for interacting with [ADXL345 accelerometer](http://www.analog.com/media/en/technical-documentation/data-sheets/ADXL345.pdf) for reading acceleration on 3 axis.
+This PowerShell module is to interact with [ADXL345 accelerometer](http://www.analog.com/media/en/technical-documentation/data-sheets/ADXL345.pdf) for reading acceleration on 3 axis.
 
 ## Hardware setup
 
 Several vendors have breakout boards with ADXL345 sensor. In this example we'll use [SparkFun Triple Axis Accelerometer Breakout](https://www.sparkfun.com/products/9836).
 
-ADXL345 sensor supports both I2C and SPI interfaces; in this example we'll use I2C.
+ADXL345 sensor supports both I2C and SPI interfaces; here we'll use I2C.
 
-Wiring diagram with Raspberry Pi 3 is like this:
+Wiring diagram with Raspberry Pi 3 looks like this:
 
 ![ADXL345_Wiring](https://user-images.githubusercontent.com/9315492/39673576-40f7e8b4-513f-11e8-8b69-314237f99bd1.png)
 
@@ -38,7 +38,7 @@ Import-Module ./PowerShell-IoT/Examples/Microsoft.PowerShell.IoT.ADXL345
 
 ### Collect Data
 
-Simply collect acceleration values in g
+To simply collect acceleration values in g:
 
 ```powershell
 PS /home/pi> $accelerometer = Get-ADXL345Device
@@ -51,11 +51,10 @@ x                              0.0828058
 z                              0.86966985
 ```
 
-Represent current acceleration on the 3 axis with bargraphs
+To represent current acceleration on the 3 axis with bargraphs:
 
 ```powershell
 PS /home/pi> $accelerometer = Get-ADXL345Device
-PS /home/pi> Get-ADXL345Data -Device $accelerometer
 PS /home/pi> while ($true) {
     $data = Get-ADXL345Data -Device $accelerometer -Limit 1
     Write-Progress -id 1 -Activity 'X axis' -Status 'Acceleration' -PercentComplete ($data.x * 50 + 50)
