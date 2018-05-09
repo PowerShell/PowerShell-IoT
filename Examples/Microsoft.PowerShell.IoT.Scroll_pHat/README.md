@@ -13,6 +13,9 @@ There are 11 data registers, ranging from address 0x01 to 1x0B.
 Each register holds 1byte, but since ScrollPHat only has 5 lines, only 5bits are used.
 To set the LED on, you need to set the correspondent bits as 1, as example, to achieve the following:
 
+![](https://i.imgur.com/nII0q7B.jpg)
+
+we need to set the register 1 with data 0x0D (0000 1101).
 
 This example assumes that you already have I2C enabled and Microsoft.PowerShell.IoT module installed.
 
