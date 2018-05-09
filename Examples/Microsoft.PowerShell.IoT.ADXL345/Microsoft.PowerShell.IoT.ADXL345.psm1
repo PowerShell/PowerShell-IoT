@@ -65,7 +65,7 @@ function Get-ADXL345Data {
         $zValue = [int16]($zValue1.Data[0]) -shl 8 -bor [int16]($zValue0.Data[0])
     }
     catch {
-        Throw "Unable to retreive data from device. Message: $($_.Exception.Message)"
+        Throw "Unable to retreive data from device '$($Device.FriendlyName)'. Message: $($_.Exception.Message)"
     }
 
     if (-not $Raw) {
@@ -91,9 +91,14 @@ function InitializeDevice {
         $Device
     )
 
-    Set-I2CRegister -Device $Device -Register $script:ADXL345_POWER_CTL -Data 0x00
-    Set-I2CRegister -Device $Device -Register $script:ADXL345_POWER_CTL -Data 0x10
-    Set-I2CRegister -Device $Device -Register $script:ADXL345_POWER_CTL -Data 0x08
+    try {
+        Set-I2CRegister -Device $Device -Register $script:ADXL345_POWER_CTL -Data 0x00
+        Set-I2CRegister -Device $Device -Register $script:ADXL345_POWER_CTL -Data 0x10
+        Set-I2CRegister -Device $Device -Register $script:ADXL345_POWER_CTL -Data 0x08
+    }
+    catch {
+        Throw "Unable to initialize device '$($Device.FriendlyName)'. Message: $($_.Exception.Message)"
+    }
 }
 
 function FilterValue {
