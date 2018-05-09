@@ -38,10 +38,10 @@ function Get-ADXL345Device {
 
 function Get-ADXL345Data {
     param (
-        [Parameter(Mandatory, ValueFromPipeline)]
+        [Parameter(ValueFromPipeline)]
         [ValidateNotNullOrEmpty()]
         [Microsoft.PowerShell.IoT.I2CDevice] 
-        $Device,
+        $Device = (Get-ADXL345Device),
 
         [Parameter()]
         [Double]
