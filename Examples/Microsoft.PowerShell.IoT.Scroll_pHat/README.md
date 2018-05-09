@@ -31,3 +31,7 @@ git clone https://github.com/PowerShell/PowerShell-IoT.git #if you haven't alrea
 After running this code, you should see a "Sad Joey" on your Scroll pHat.
 
 Note: What's "Sad Joey"? - #SadJoey became "popular" meme/hastag [on twitter](https://twitter.com/search?q=%23sadJoey&src=typd) during the #PSConfEU 2018
+
+This is what you should see:
+
+![](https://i.imgur.com/112YDk4.jpg)
