@@ -17,7 +17,18 @@ To set the LED on, you need to set the correspondent bits as 1, as example, to a
 
 we need to set the register 1 with data 0x0D (0000 1101).
 
-This example assumes that you already have I2C enabled and Microsoft.PowerShell.IoT module installed.
+## Software setup
+
+### Install PowerShell Core on Raspberry Pi
+
+Installation instructions can be found [here](https://github.com/PowerShell/PowerShell/tree/master/docs/installation/linux.md#raspbian).
+
+### Enable I2C interface on Raspberry Pi
+
+1. `sudo raspi-config`
+2. `5 Interfacing options`
+3. `P5 I2C`
+4. `Would you like ARM I2C interface to be enabled -> Yes`
 
 Start PowerShell (**with sudo, so that you can access the I2C bus**)
 
