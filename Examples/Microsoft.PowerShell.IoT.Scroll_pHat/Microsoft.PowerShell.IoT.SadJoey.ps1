@@ -18,7 +18,7 @@ Import-Module Microsoft.PowerShell.IoT
 $Device = Get-I2CDevice -Id $DeviceAddress -FriendlyName phat
 Set-I2CRegister -Device $Device -Register $ConfigurationRegisterAddress -Data $ConfigurationRegisterValue
 
-######## Lightning Effect #####
+######## Brightness #####
 Set-I2CRegister -Device $Device -Register $BrightnessRegisterAddress -Data $BrightnessRegisterValue
 
 ######### Write the #sadJoey pattern to the Data registers #########
