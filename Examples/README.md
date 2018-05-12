@@ -7,6 +7,7 @@ Example modules that leverage PowerShell IoT in a specific way.
 | Example | Difficulty | Type |
 |---------|------------|------|
 | [Microsoft.PowerShell.IoT.LED](/Examples/Microsoft.PowerShell.IoT.LED) | Easy | GPIO |
+| [Microsoft.PowerShell.IoT.Scroll_pHat](/Examples/Microsoft.PowerShell.IoT.Scroll_pHat) | Easy | I2C |
 | [Microsoft.PowerShell.IoT.BME280](/Examples/Microsoft.PowerShell.IoT.BME280) | Medium | I2C |
 | [Microsoft.PowerShell.IoT.SSD1306](/Examples/Microsoft.PowerShell.IoT.SSD1306) | Medium | I2C |
 | [Microsoft.PowerShell.IoT.ADXL345](/Examples/Microsoft.PowerShell.IoT.ADXL345) | Medium | I2C |
