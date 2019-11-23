@@ -18,22 +18,12 @@ public class SetI2CRegister : Cmdlet
 
 	protected override void ProcessRecord()
 	{
-		try
+		Span<byte> dataOut = stackalloc byte[] { (byte)Register, Data[0] };
+		this.Device.device.Write(dataOut);
+		if (this.PassThru)
 		{
-			this.Device.device.WriteAddressByte(this.Register, this.Data[0]);
-			if (this.PassThru)
-			{
-				I2CDeviceRegisterData result = new I2CDeviceRegisterData(this.Device, this.Register, this.Data);
-				WriteObject(result);
-			}
-		}
-		catch (System.TypeInitializationException e) // Unosquare.RaspberryIO.Gpio.GpioController.Initialize throws this TypeInitializationException
-		{
-			if (!Unosquare.RaspberryIO.Computer.SystemInfo.Instance.IsRunningAsRoot)
-			{
-				throw new PlatformNotSupportedException(Resources.ErrNeedRootPrivileges, e);
-			}
-			throw;
+			I2CDeviceRegisterData result = new I2CDeviceRegisterData(this.Device, this.Register, this.Data);
+			WriteObject(result);
 		}
 	}
 }

@@ -23,44 +23,40 @@ public class GetI2CRegister : Cmdlet
 
 	protected override void ProcessRecord()
 	{
-		try
+		if (this.ByteCount > 1)
 		{
-			if (this.ByteCount > 1)
+			byte[] writeBuffer = new byte[] { (byte)this.Register };
+			Span<byte> readBuffer = stackalloc byte[ByteCount];
+
+			this.Device.device.Read(readBuffer);
+
+			if (this.Raw)
 			{
-				this.Device.device.Write((byte)this.Register);
-				byte[] value = this.Device.device.Read(this.ByteCount);
-				if (this.Raw)
-				{
-					WriteObject(value);
-				}
-				else
-				{
-					I2CDeviceRegisterData result = new I2CDeviceRegisterData(this.Device, this.Register);
-					result.Data = value;
-					WriteObject(result);
-				}
+				WriteObject(readBuffer.ToArray());
 			}
 			else
 			{
-				byte value = this.Device.device.ReadAddressByte(this.Register);
-				if (this.Raw)
+				I2CDeviceRegisterData result = new I2CDeviceRegisterData(this.Device, this.Register)
 				{
-					WriteObject(value);
-				}
-				else
-				{
-					I2CDeviceRegisterData result = new I2CDeviceRegisterData(this.Device, this.Register, new byte[1] { value });
-					WriteObject(result);
-				}
+					Data = readBuffer.ToArray() // optimize to be Span? How does PowerShell deal with it?
+				};
+				WriteObject(result);
 			}
 		}
-		catch (System.TypeInitializationException e) // Unosquare.RaspberryIO.Gpio.GpioController.Initialize throws this TypeInitializationException
+		else
 		{
-			if (!Unosquare.RaspberryIO.Computer.SystemInfo.Instance.IsRunningAsRoot)
+			this.Device.device.WriteByte((byte)this.Register);
+			byte value = this.Device.device.ReadByte();
+			//byte value = this.Device.device.ReadAddressByte(this.Register);
+			if (this.Raw)
 			{
-				throw new PlatformNotSupportedException(Resources.ErrNeedRootPrivileges, e);
+				WriteObject(value);
 			}
-			throw;
+			else
+			{
+				I2CDeviceRegisterData result = new I2CDeviceRegisterData(this.Device, this.Register, new byte[1] { value });
+				WriteObject(result);
+			}
 		}
 	}
 }

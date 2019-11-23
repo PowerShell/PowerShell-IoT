@@ -1,5 +1,6 @@
 using System;
 using System.Management.Automation;  // PowerShell namespace.
+using System.Device.I2c;
 
 [Cmdlet(VerbsCommon.Get, "I2CDevice")]
 public class GetI2CDevice : Cmdlet
@@ -18,17 +19,9 @@ public class GetI2CDevice : Cmdlet
 
 	protected override void ProcessRecord()
 	{
-		try
-		{
-			WriteObject(new I2CDevice(Unosquare.RaspberryIO.Pi.I2C.AddDevice(this.Id), this.Id, this.FriendlyName));
-		}
-		catch (System.TypeInitializationException e) // Unosquare.RaspberryIO.Gpio.GpioController.Initialize throws this TypeInitializationException
-		{
-			if (!Unosquare.RaspberryIO.Computer.SystemInfo.Instance.IsRunningAsRoot)
-			{
-				throw new PlatformNotSupportedException(Resources.ErrNeedRootPrivileges, e);
-			}
-			throw;
-		}
+		var settings = new I2cConnectionSettings(1, this.Id);
+		I2cDevice device = I2cDevice.Create(settings);
+		WriteObject(new I2CDevice(device, this.Id, this.FriendlyName));
+
 	}
 }
