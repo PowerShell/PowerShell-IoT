@@ -1,5 +1,6 @@
 using System;
 using System.Management.Automation;  // PowerShell namespace.
+using System.Device.Gpio;
 [Cmdlet(VerbsCommunications.Send, "SPIData")]
 public class SendSPIData : Cmdlet
 {
@@ -17,6 +18,7 @@ public class SendSPIData : Cmdlet
 
 	public SendSPIData()
 	{
+		//SpiDevice dev = new SpiDevice();
 		this.Channel = 0;
 		this.Frequency = Unosquare.RaspberryIO.Gpio.SpiChannel.MinFrequency;
 	}
