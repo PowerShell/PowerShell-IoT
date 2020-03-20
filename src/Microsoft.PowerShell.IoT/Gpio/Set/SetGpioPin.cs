@@ -1,5 +1,6 @@
 using System;
-using System.Management.Automation;  // PowerShell namespace.
+using System.Management.Automation;
+using System.Device.Gpio;
 
 [Cmdlet(VerbsCommon.Set, "GpioPin")]
 public class SetGpioPin : Cmdlet
@@ -15,30 +16,30 @@ public class SetGpioPin : Cmdlet
 
 	protected override void ProcessRecord()
 	{
-		try
+		if (this.Id != null)
 		{
-			if (this.Id != null)
-			{
+			GpioController controller = new GpioController();
+			//using (GpioController controller = new GpioController())
+        	//{
 				foreach (int pinId in this.Id)
 				{
-					var pin = Unosquare.RaspberryIO.Pi.Gpio[pinId];
-					pin.PinMode = Unosquare.RaspberryIO.Gpio.GpioPinDriveMode.Output;
-					pin.Write((Unosquare.RaspberryIO.Gpio.GpioPinValue)this.Value);
+					controller.OpenPin(pinId, PinMode.Output); // pin will be closed in GpioController.Dispose()
+					if(this.Value == SignalLevel.Low)
+					{
+						controller.Write(pinId, PinValue.Low);
+					}
+					else
+					{
+						controller.Write(pinId, PinValue.High);
+					}
+
 					if (this.PassThru)
 					{
-						GpioPinData pinData = new GpioPinData(pinId, this.Value, pin);
+						GpioPinData pinData = new GpioPinData(pinId, this.Value);
 						WriteObject(pinData);
 					}
 				}
-			}
-		}
-		catch (System.TypeInitializationException e) // Unosquare.RaspberryIO.Gpio.GpioController.Initialize throws this TypeInitializationException
-		{
-			if (!Unosquare.RaspberryIO.Computer.SystemInfo.Instance.IsRunningAsRoot)
-			{
-				throw new PlatformNotSupportedException(Resources.ErrNeedRootPrivileges, e);
-			}
-			throw;
+			//}
 		}
 	}
 }

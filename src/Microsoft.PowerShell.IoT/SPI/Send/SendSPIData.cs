@@ -18,11 +18,11 @@ public class SendSPIData : Cmdlet
 	public SendSPIData()
 	{
 		this.Channel = 0;
-		this.Frequency = Unosquare.RaspberryIO.Gpio.SpiChannel.MinFrequency;
+		//this.Frequency = Unosquare.RaspberryIO.Gpio.SpiChannel.MinFrequency;
 	}
 
 	protected override void ProcessRecord()
-	{
+	{/*
 		try
 		{
 			var spiChannel = Unosquare.RaspberryIO.Pi.Spi.Channel0;
@@ -54,6 +54,6 @@ public class SendSPIData : Cmdlet
 				throw new PlatformNotSupportedException(Resources.ErrNeedRootPrivileges, e);
 			}
 			throw;
-		}
+		}*/
 	}
 }

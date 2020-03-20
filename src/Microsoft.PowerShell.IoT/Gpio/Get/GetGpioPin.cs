@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
-using System.Management.Automation;  // PowerShell namespace.
+using System.Management.Automation;
+using System.Device.Gpio;
 
  [Cmdlet(VerbsCommon.Get, "GpioPin")]
 public class GetGpioPin : Cmdlet
@@ -16,59 +17,54 @@ public class GetGpioPin : Cmdlet
 
 	protected override void ProcessRecord()
 	{
-		try
-		{
-			ArrayList pinList = new ArrayList();
+		ArrayList pinList = new ArrayList();
 
-			if ((this.Id == null) || (this.Id.Length <= 0))
+		if ((this.Id == null) || (this.Id.Length <= 0))
+		{
+			// this is "gpio readall" functionality
+
+			/*foreach (var pin in Unosquare.RaspberryIO.Pi.Gpio.Pins)
 			{
-				foreach (var pin in Unosquare.RaspberryIO.Pi.Gpio.Pins)
+				pinList.Add(pin.PinNumber);
+			}*/
+		}
+		else
+		{
+			pinList.AddRange(this.Id);
+		}
+
+		using (GpioController controller = new GpioController())
+        {
+			PinMode mode = PinMode.Input;
+			if (this.PullMode.HasValue)
+			{
+				switch (this.PullMode.Value)
 				{
-					pinList.Add(pin.PinNumber);
-				}
-			}
-			else
-			{
-				pinList.AddRange(this.Id);
-			}
+					case global::PullMode.PullDown: mode = PinMode.InputPullDown; break;
+					case global::PullMode.PullUp:   mode = PinMode.InputPullUp; break;
+					default:                        mode = PinMode.Input; break;
+				};
+			};
 
 			foreach (int pinId in pinList)
 			{
-				var pin = Unosquare.RaspberryIO.Pi.Gpio[pinId];
-				try
+				SignalLevel slResult = SignalLevel.Low;
+				controller.OpenPin(pinId, mode); // pin will be closed in GpioController.Dispose()
+				if (controller.Read(pinId) == PinValue.High)
 				{
-					pin.PinMode = Unosquare.RaspberryIO.Gpio.GpioPinDriveMode.Input;
-					if (this.PullMode.HasValue)
-					{
-						pin.InputPullMode = (Unosquare.RaspberryIO.Gpio.GpioPinResistorPullMode)this.PullMode.Value;
-					};
-				}
-				catch (System.NotSupportedException)
-				{
-					// We want to avoid errors like
-					// System.NotSupportedException : Get - GpioPin : Pin Pin15 'BCM 14 (UART Transmit)' does not support mode 'Input'.Pin capabilities are limited to: UARTTXD
-					// at the same time we need to return PinInfo for such pins, so we need to continue processing
-				}
-				bool pinBoolValue = pin.Read();
-
+					slResult = SignalLevel.High;
+				};
+				
 				if (this.Raw)
 				{
-					WriteObject(pinBoolValue ? SignalLevel.High : SignalLevel.Low);
+					WriteObject(slResult);
 				}
 				else
 				{
-					GpioPinData pinData = new GpioPinData(pinId, pinBoolValue ? SignalLevel.High : SignalLevel.Low, pin);
+					GpioPinData pinData = new GpioPinData(pinId, slResult);
 					WriteObject(pinData);
 				}
 			}
-		}
-		catch (System.TypeInitializationException e) // Unosquare.RaspberryIO.Gpio.GpioController.Initialize throws this TypeInitializationException
-		{
-			if (!Unosquare.RaspberryIO.Computer.SystemInfo.Instance.IsRunningAsRoot)
-			{
-				throw new PlatformNotSupportedException(Resources.ErrNeedRootPrivileges, e);
-			}
-			throw;
 		}
 	}
 }
