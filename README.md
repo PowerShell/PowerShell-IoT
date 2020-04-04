@@ -48,10 +48,8 @@ Please see our [docs folder here](/docs) for an API reference, pin layout and ot
 
 ### Dependencies
 
-This project relies on [RaspberryIO](https://github.com/unosquare/raspberryio).
-It's an easy-to-use .NET library for interacting with Raspberry Pi's IO functionality.
-RaspberryIO is built on [Wiring Pi](http://wiringpi.com/) -
-a pin based GPIO access library written in C.
+This project relies on [.NET Core IoT Libraries](https://github.com/dotnet/iot).
+It is a .NET library for interacting with Raspberry Pi's IO functionality.
 
 ## Installation
 
@@ -60,7 +58,6 @@ a pin based GPIO access library written in C.
 You can grab the latest version of PowerShell IoT by running:
 
 ```powershell
-sudo WIRINGPI_CODES=1 pwsh
 Install-Module Microsoft.PowerShell.IoT
 ```
 
@@ -133,13 +130,8 @@ _NOTE: If you'd rather not use the script, simply copy the `out/Microsoft.PowerS
 First, you must run pwsh with sudo:
 
 ```powershell
-sudo WIRINGPI_CODES=1 pwsh
+sudo pwsh
 ```
-
-##### About `WIRINGPI_CODES` environment variable
-
-`Microsoft.PowerShell.IoT` module internally uses [WiringPi library](http://wiringpi.com/reference/setup) which has a default behavior of terminating current process (in this case - PowerShell) even on non-critical errors in setup functions.
-To avoid such crashes define `WIRINGPI_CODES` environment variable either when starting PowerShell (see example above) or through configuration scripts - example for an interactive login shell - `echo "export WIRINGPI_CODES=1"|sudo tee -a /etc/profile.d/WiringPiCodes.sh`
 
 If you have the `Microsoft.PowerShell.IoT` module in your PSModulePath:
 
