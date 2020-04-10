@@ -1,0 +1,8 @@
+{
+    "editor.detectIndentation": false,
+    "editor.tabSize": 4,
+    "editor.insertSpaces": true,
+    "[csharp]": {
+        "editor.rulers": [140]
+    },
+}
