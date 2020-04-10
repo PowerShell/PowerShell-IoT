@@ -20,17 +20,7 @@ public class SetGpioPin : GpioCmdletBase
         {
             foreach (int pinId in this.Id)
             {
-                if (this.GpioController.IsPinOpen(pinId))
-                {
-                    if (this.GpioController.GetPinMode(pinId) != PinMode.Output)
-                    {
-                        this.GpioController.SetPinMode(pinId, PinMode.Output);
-                    }
-                }
-                else
-                {
-                    this.GpioController.OpenPin(pinId, PinMode.Output);
-                }
+                this.EnsureOpenPin(pinId, PinMode.Output);
                 
                 if(this.Value == SignalLevel.Low)
                 {

@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <TargetFramework>netstandard2.0</TargetFramework>
     <Version>0.2.0.0</Version>
     <Authors>Microsoft Corporation</Authors>
     <Company>Microsoft Corporation</Company>
@@ -17,7 +17,7 @@
 
   <ItemGroup>
     <PackageReference Include="System.Device.Gpio" Version="1.0.0" />
-    <PackageReference Include="System.Management.Automation" Version="7.0.0" />
+    <PackageReference Include="PowerShellStandard.Library" Version="7.0.0-preview.1" />
   </ItemGroup>
 
 </Project>

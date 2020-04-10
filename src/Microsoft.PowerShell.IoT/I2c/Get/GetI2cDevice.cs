@@ -17,7 +17,6 @@ public class GetI2CDevice : Cmdlet
     public GetI2CDevice()
     {
         this.FriendlyName = string.Empty;
-        this.Id = 0;
         this.BusId = 1;
     }
 

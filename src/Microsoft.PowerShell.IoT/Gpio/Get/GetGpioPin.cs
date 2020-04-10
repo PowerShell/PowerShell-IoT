@@ -6,7 +6,7 @@ using System.Device.Gpio;
 [Cmdlet(VerbsCommon.Get, "GpioPin")]
 public class GetGpioPin : GpioCmdletBase
 {
-    [Parameter(Mandatory = false, ValueFromPipeline = true, ValueFromPipelineByPropertyName = true, Position = 0)]
+    [Parameter(Mandatory = true, ValueFromPipeline = true, ValueFromPipelineByPropertyName = true, Position = 0)]
     public int[] Id { get; set; }
 
     [Parameter(Mandatory = false, ValueFromPipelineByPropertyName = true, Position = 1)]
@@ -22,6 +22,7 @@ public class GetGpioPin : GpioCmdletBase
         if ((this.Id == null) || (this.Id.Length <= 0))
         {
             // TODO: this is "gpio readall" functionality
+            // do not forget to change Id param to Mandatory = false when this is implemented
         }
         else
         {
@@ -43,17 +44,7 @@ public class GetGpioPin : GpioCmdletBase
         {
             SignalLevel slResult = SignalLevel.Low;
 
-             if (this.GpioController.IsPinOpen(pinId))
-            {
-                if (this.GpioController.GetPinMode(pinId) != mode)
-                {
-                    this.GpioController.SetPinMode(pinId, mode);
-                }
-            }
-            else
-            {
-                this.GpioController.OpenPin(pinId, mode);
-            }
+            this.EnsureOpenPin(pinId, mode);
 
             if (this.GpioController.Read(pinId) == PinValue.High)
             {

@@ -127,10 +127,10 @@ _NOTE: If you'd rather not use the script, simply copy the `out/Microsoft.PowerS
 
 #### Running
 
-First, you must run pwsh with sudo:
+Start PowerShell:
 
 ```powershell
-sudo pwsh
+pwsh
 ```
 
 If you have the `Microsoft.PowerShell.IoT` module in your PSModulePath:

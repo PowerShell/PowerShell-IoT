@@ -20,6 +20,21 @@ public class GpioCmdletBase : Cmdlet
             StaticGpioController = value;
         }
     }
+
+    protected void EnsureOpenPin(int pinId, PinMode mode)
+    {
+        if (this.GpioController.IsPinOpen(pinId))
+        {
+            if (this.GpioController.GetPinMode(pinId) != mode)
+            {
+                this.GpioController.SetPinMode(pinId, mode);
+            }
+        }
+        else
+        {
+            this.GpioController.OpenPin(pinId, mode);
+        }
+    }
 }
 
 [Cmdlet(VerbsCommon.Clear, "GpioResources")]
