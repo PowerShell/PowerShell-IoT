@@ -7,7 +7,7 @@
     CompanyName="Microsoft Corporation"
     Copyright="© Microsoft Corporation. All rights reserved."
     Description='A PowerShell module for interacting with hardware sensors and devices using common protocols: GPIO, I2C & SPI.'
-    ModuleVersion="0.1.1"
+    ModuleVersion="0.2.0"
     FunctionsToExport = '*'
     CmdletsToExport = '*'
     AliasesToExport = @()
@@ -29,7 +29,11 @@
             # IconUri = ''
 
             # ReleaseNotes of this module
-            ReleaseNotes = '## 0.1.1
+            ReleaseNotes = '## 0.2.0
+
+Started using System.Device.Gpio
+
+            ## 0.1.1
 
 Minor bug fixes
 

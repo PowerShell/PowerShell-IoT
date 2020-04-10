@@ -1,8 +1,8 @@
 # Pin layout
 
-PowerShell IoT uses Wiring Pi under the hood.
-As such, it follow the Wiring Pi scheme for pin identification.
-For all of the `Pin` parameters in this module, use the WiringPi/wPi number listed in the following diagram:
+PowerShell IoT uses logical representation of the microcontroller's GPIOs.
+Refer to the microcontroller's datasheet to find this information.
+In case of Raspberry Pi use the BCM number listed in the following diagram:
 
 ## Image reference
 
