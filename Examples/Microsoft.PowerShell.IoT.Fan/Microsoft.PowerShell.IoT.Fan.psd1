@@ -11,7 +11,8 @@
     FunctionsToExport = @('Enable-Fan','Disable-Fan')
     CmdletsToExport = @()
     AliasesToExport = @()
-    NestedModules=@('Microsoft.PowerShell.IoT','Microsoft.PowerShell.IoT.Fan.psm1')
+    RootModule = 'Microsoft.PowerShell.IoT.Fan.psm1'
+    NestedModules=@('Microsoft.PowerShell.IoT')
     HelpInfoURI = 'https://github.com/PowerShell/PowerShell-IoT'
     # Private data to pass to the module specified in RootModule/ModuleToProcess. This may also contain a PSData hashtable with additional module metadata used by PowerShell.
     PrivateData = @{

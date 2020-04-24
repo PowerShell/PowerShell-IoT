@@ -26,7 +26,7 @@ Installation instructions can be found [here](https://github.com/PowerShell/Powe
 ### Start Powershell and install modules
 
 ```powershell
-sudo pwsh
+pwsh
 
 Install-Module -Name Microsoft.PowerShell.IoT
 
@@ -37,7 +37,7 @@ git clone https://github.com/PowerShell/PowerShell-IoT.git
 
 ```powershell
 # Start monitoring CPU temperature and turn on the fan when it reaches 71 degrees; turn fan off when CPU temperature drops below 55 degrees
-pwsh ./PowerShell-IoT/Examples/Microsoft.PowerShell.IoT.Fan/SmartFan.ps1 -OnTemperatureC 71 -OffTemperatureC 55 -Pin 17
+pwsh ./PowerShell-IoT/Examples/Microsoft.PowerShell.IoT.Fan/SmartFan.ps1 -Pin 17 -OnTemperature 71 -OffTemperature 55 -TemperatureScale Celsius
 VERBOSE: 1:36:05 PM: CPU temperature  =  71.575 C | 160.835 F
 VERBOSE: Starting fan...
 VERBOSE: 1:36:10 PM: CPU temperature  =  70.601 C | 159.0818 F

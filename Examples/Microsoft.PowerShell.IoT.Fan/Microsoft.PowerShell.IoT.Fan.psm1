@@ -5,7 +5,7 @@ function Enable-Fan
     (
         [Parameter(Mandatory=$true, Position=0)]
         [ValidateNotNullOrEmpty()]
-        [int] $Pin = 17
+        [int] $Pin
     )
     
     Set-GpioPin -Id $Pin -Value High
@@ -18,7 +18,7 @@ function Disable-Fan
     (
         [Parameter(Mandatory=$true, Position=0)]
         [ValidateNotNullOrEmpty()]
-        [int] $Pin = 17
+        [int] $Pin
     )
     
     Set-GpioPin -Id $Pin -Value Low
