@@ -1,4 +1,4 @@
-# Copyright (c) Microsoft Corporation. All rights reserved.
+# Copyright (c) Microsoft Corporation.
 # Licensed under the MIT License.
 
 # Inspired from https://github.com/sparkfun/SparkFun_ADXL345_Arduino_Library
