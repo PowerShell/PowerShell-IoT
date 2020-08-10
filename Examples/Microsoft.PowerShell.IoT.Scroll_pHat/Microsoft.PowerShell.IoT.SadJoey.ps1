@@ -1,5 +1,6 @@
-# Copyright (c) Microsoft Corporation. All rights reserved.
+# Copyright (c) Microsoft Corporation.
 # Licensed under the MIT License.
+
 Import-Module Microsoft.PowerShell.IoT
 
 [int]$DeviceAddress = 0x60
