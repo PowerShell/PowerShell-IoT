@@ -38,6 +38,11 @@ public class SendSPIData : Cmdlet
         this.BusId = 0;
         this.ChipSelectLine = 0;
         this.Frequency = 500_000; // 500 KHz default speed
+        //use the same defaults as .NET core team is using
+        this.Mode = SpiMode.Mode0;
+        this.DataBitLength = 8;
+        this.DataFlow = DataFlow.MsbFirst;
+        this.ChipSelectLineActiveState = PinValue.Low;
     }
 
     protected override void ProcessRecord()
@@ -50,7 +55,7 @@ public class SendSPIData : Cmdlet
             DataFlow = this.DataFlow,
             ChipSelectLineActiveState = this.ChipSelectLineActiveState
         };
-
+        
         using (var spiDevice = SpiDevice.Create(settings))
         {
             var response = new byte[this.Data.Length];

@@ -23,7 +23,6 @@ public class SPIData : SPIDevice
 {
     public byte[] Data { get; set; }
     public byte[] Response { get; set; }
-
     public SPIData(SpiDevice device, int busId, int chipSelectLine, int frequency, 
                    int dataBitLength, SpiMode mode, DataFlow dataFlow, 
                    PinValue chipSelectLineActiveState, byte[] data, byte[] response
