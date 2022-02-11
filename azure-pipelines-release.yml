@@ -1,0 +1,19 @@
+name: $(BuildDefinitionName)_$(date:yyMM).$(date:dd)$(rev:rrr)
+
+trigger: none
+
+stages:
+- stage: Build
+  displayName: Build module
+  pool:
+      name: 1ES
+      demands:
+      - ImageOverride -equals PSMMS2019-Secure
+  jobs:
+  - job: BuildPkg
+    displayName: Build module
+    steps:
+    - pwsh: |
+        & $(Build.SourcesDirectory)\SimpleBuild.ps1
+      displayName: Build Microsoft.PowerShell.IoT module
+      condition: succeededOrFailed()
