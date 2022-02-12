@@ -27,6 +27,8 @@ stages:
   jobs:
   - job: BuildPkg
     displayName: Build module
+    variables:
+      - group: ESRP
     steps:
 
     - pwsh: |
@@ -48,3 +50,39 @@ stages:
     - pwsh: |
         dir "$(BuildOutDir)\*" -Recurse
       displayName: Show BuildOutDirectory
+
+    - pwsh: |
+        $signSrcPath = "$(BuildOutDir)"
+        # Set signing src path variable
+        $vstsCommandString = "vso[task.setvariable variable=signSrcPath]${signSrcPath}"
+        Write-Host "sending " + $vstsCommandString
+        Write-Host "##$vstsCommandString"
+        $signOutPath = "$(Build.SourcesDirectory)\signed\Microsoft.PowerShell.IoT"
+        $null = New-Item -ItemType Directory -Path $signOutPath
+        # Set signing out path variable
+        $vstsCommandString = "vso[task.setvariable variable=signOutPath]${signOutPath}"
+        Write-Host "sending " + $vstsCommandString
+        Write-Host "##$vstsCommandString"
+        # Set path variable for guardian codesign validation
+        $vstsCommandString = "vso[task.setvariable variable=GDN_CODESIGN_TARGETDIRECTORY]${signOutPath}"
+        Write-Host "sending " + $vstsCommandString
+        Write-Host "##$vstsCommandString"
+      displayName: Setup variables for signing
+
+    - template: EsrpSign.yml@ComplianceRepo
+      parameters:
+        # the folder which contains the binaries to sign
+        buildOutputPath: $(signSrcPath)
+        # the location to put the signed output
+        signOutputPath: $(signOutPath)
+        # the certificate ID to use
+        certificateId: "CP-230012"
+        # the file pattern to use, comma separated
+        pattern: '*.psd1,Microsoft.PowerShell.IoT.dll'
+
+    - pwsh: |
+        Compress-Archive -Path "$(signOutPath)\*" -DestinationPath "$(System.ArtifactsDirectory)\Microsoft.PowerShell.IoT.zip"
+      displayName: Create Microsoft.PowerShell.IoT.zip
+
+    - publish: $(System.ArtifactsDirectory)\Microsoft.PowerShell.IoT.zip
+      artifact: SignedModule
