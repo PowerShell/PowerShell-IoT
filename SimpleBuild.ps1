@@ -14,4 +14,7 @@ $OutModulePath = "$PSScriptRoot\out\Microsoft.PowerShell.IoT"
 Copy-Item -Path "$PSScriptRoot\src\Microsoft.PowerShell.IoT\Microsoft.PowerShell.IoT.psd1" -Destination $OutModulePath -Force
 Copy-Item -Path "$PSScriptRoot\src\Microsoft.PowerShell.IoT\bin\Debug\netstandard2.0\publish\*" -Destination $OutModulePath -Force -Recurse
 
-Write-Verbose -Verbose "Build module location:   $OutModulePath"
+"Build module location:   $OutModulePath" | Write-Verbose -Verbose
+
+"Setting VSTS variable 'BuildOutDir' to '$OutModulePath'" | Write-Verbose -Verbose
+Write-Host "##vso[task.setvariable variable=BuildOutDir]$OutModulePath"

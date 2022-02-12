@@ -2,6 +2,21 @@ name: $(BuildDefinitionName)_$(date:yyMM).$(date:dd)$(rev:rrr)
 
 trigger: none
 
+resources:
+  repositories:
+  - repository: ComplianceRepo
+    type: github
+    endpoint: ComplianceGHRepo
+    name: PowerShell/compliance
+
+variables:
+  - name: PackageName
+    value: 'Microsoft.PowerShell.IoT'
+  - name: PackageVersion
+    value: '0.2.0'
+  - name: BuildOutDir
+    value: ''
+
 stages:
 - stage: Build
   displayName: Build module
@@ -13,7 +28,23 @@ stages:
   - job: BuildPkg
     displayName: Build module
     steps:
+
     - pwsh: |
         & $(Build.SourcesDirectory)\SimpleBuild.ps1
       displayName: Build Microsoft.PowerShell.IoT module
       condition: succeededOrFailed()
+
+    - pwsh: |
+        dir "$(BuildOutDir)\*" -Recurse
+      displayName: Show BuildOutDirectory
+
+    - template: Sbom.yml@ComplianceRepo
+      parameters:
+        BuildDropPath: "$(BuildOutDir)"
+        Build_Repository_Uri: 'https://github.com/PowerShell/PowerShell-IoT'
+        PackageName: $(PackageName)
+        PackageVersion: $(PackageVersion)
+
+    - pwsh: |
+        dir "$(BuildOutDir)\*" -Recurse
+      displayName: Show BuildOutDirectory
