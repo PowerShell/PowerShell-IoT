@@ -86,3 +86,17 @@ stages:
 
     - publish: $(System.ArtifactsDirectory)\Microsoft.PowerShell.IoT.zip
       artifact: SignedModule
+
+    - template: assembly-module-compliance.yml@ComplianceRepo
+      parameters:
+        # component-governance
+        sourceScanPath: '$(signOutPath)'
+        # credscan
+        suppressionsFile: ''
+        # TermCheck
+        optionsRulesDBPath: ''
+        optionsFTPath: ''
+        # tsa-upload
+        codeBaseName: 'Microsoft.PowerShell.IoT_20220214'
+        # selections
+        APIScan: false # set to false when not using Windows APIs.
