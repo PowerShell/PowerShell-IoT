@@ -1,0 +1,104 @@
+name: $(BuildDefinitionName)_$(date:yyMM).$(date:dd)$(rev:rrr)
+
+trigger: none
+
+resources:
+  repositories:
+  - repository: ComplianceRepo
+    type: github
+    endpoint: ComplianceGHRepo
+    name: PowerShell/compliance
+
+variables:
+  - name: PackageName
+    value: 'Microsoft.PowerShell.IoT'
+  - name: PackageVersion
+    value: '0.2.0'
+  - name: BuildOutDir
+    value: ''
+
+stages:
+- stage: Build
+  displayName: Build module
+  pool:
+      name: 1ES
+      demands:
+      - ImageOverride -equals PSMMS2019-Secure
+  jobs:
+  - job: BuildPkg
+    displayName: Build module
+    variables:
+      - group: ESRP
+    steps:
+
+    - pwsh: |
+        & $(Build.SourcesDirectory)\SimpleBuild.ps1
+      displayName: Build Microsoft.PowerShell.IoT module
+      condition: succeededOrFailed()
+
+    - pwsh: |
+        dir "$(BuildOutDir)\*" -Recurse
+      displayName: Show BuildOutDirectory
+
+    - template: Sbom.yml@ComplianceRepo
+      parameters:
+        BuildDropPath: "$(BuildOutDir)"
+        Build_Repository_Uri: 'https://github.com/PowerShell/PowerShell-IoT'
+        PackageName: $(PackageName)
+        PackageVersion: $(PackageVersion)
+
+    - pwsh: |
+        dir "$(BuildOutDir)\*" -Recurse
+      displayName: Show BuildOutDirectory
+
+    - pwsh: |
+        $signSrcPath = "$(BuildOutDir)"
+        # Set signing src path variable
+        $vstsCommandString = "vso[task.setvariable variable=signSrcPath]${signSrcPath}"
+        Write-Host "sending " + $vstsCommandString
+        Write-Host "##$vstsCommandString"
+        $signOutPath = "$(Build.SourcesDirectory)\signed\Microsoft.PowerShell.IoT"
+        $null = New-Item -ItemType Directory -Path $signOutPath
+        # Set signing out path variable
+        $vstsCommandString = "vso[task.setvariable variable=signOutPath]${signOutPath}"
+        Write-Host "sending " + $vstsCommandString
+        Write-Host "##$vstsCommandString"
+        # Set path variable for guardian codesign validation
+        $vstsCommandString = "vso[task.setvariable variable=GDN_CODESIGN_TARGETDIRECTORY]${signOutPath}"
+        Write-Host "sending " + $vstsCommandString
+        Write-Host "##$vstsCommandString"
+      displayName: Setup variables for signing
+
+    - template: EsrpSign.yml@ComplianceRepo
+      parameters:
+        # the folder which contains the binaries to sign
+        buildOutputPath: $(signSrcPath)
+        # the location to put the signed output
+        signOutputPath: $(signOutPath)
+        # the certificate ID to use
+        certificateId: "CP-230012"
+        # the file pattern to use, comma separated
+        pattern: '*.psd1,Microsoft.PowerShell.IoT.dll'
+
+    - pwsh: |
+        Compress-Archive -Path "$(signOutPath)\*" -DestinationPath "$(System.ArtifactsDirectory)\Microsoft.PowerShell.IoT.zip"
+      displayName: Create Microsoft.PowerShell.IoT.zip
+
+    - publish: $(System.ArtifactsDirectory)\Microsoft.PowerShell.IoT.zip
+      artifact: SignedModule
+
+    - template: assembly-module-compliance.yml@ComplianceRepo
+      parameters:
+        # component-governance
+        sourceScanPath: '$(signOutPath)'
+        # credscan
+        suppressionsFile: ''
+        # TermCheck
+        optionsRulesDBPath: ''
+        optionsFTPath: ''
+        # tsa-upload
+        codeBaseName: 'Microsoft_PowerShell_IoT_2_14_2022'
+        # selections
+        APIScan: false # set to false when not using Windows APIs.
+        # binskim
+        AnalyzeTarget: '$(signOutPath)\Microsoft.PowerShell.IoT.dll'
