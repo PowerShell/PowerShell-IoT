@@ -97,6 +97,8 @@ stages:
         optionsRulesDBPath: ''
         optionsFTPath: ''
         # tsa-upload
-        codeBaseName: 'Microsoft.PowerShell.IoT_20220214'
+        codeBaseName: 'Microsoft_PowerShell_IoT_2_14_2022'
         # selections
         APIScan: false # set to false when not using Windows APIs.
+        # binskim
+        AnalyzeTarget: '$(signOutPath)\Microsoft.PowerShell.IoT.dll'
