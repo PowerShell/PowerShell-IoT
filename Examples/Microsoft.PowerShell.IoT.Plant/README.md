@@ -32,7 +32,7 @@ Wiring diagram will be published shortly.
 
 ### Install PowerShell Core on Raspberry Pi
 
-Installation instructions can be found [here](https://github.com/PowerShell/PowerShell/tree/master/docs/installation/linux.md#raspbian).
+Installation instructions can be found [here](https://github.com/MicrosoftDocs/PowerShell-Docs/blob/d5263484cf6f29148b6e07c7b3e1d9376a5fd635/reference/docs-conceptual/install/install-raspbian.md#raspberry-pi-os).
 
 ### Start Powershell and install modules
 
